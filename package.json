@@ -5,7 +5,7 @@
   "description": "comp208-project-frontend:hybrid project with Vue",
   "main": "index.js",
   "scripts": {
-    "dev":"cd vue-app && npm install && npm run build && cd .. && cordova build ios && cordova emulate"
+    "dev": "cd vue-app && npm install && npm run build && cd .. && cordova build ios && cordova emulate"
   },
   "keywords": [
     "ecosystem:cordova"

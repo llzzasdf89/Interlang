@@ -5,6 +5,7 @@ node_modules
 plugins/
 platforms/
 www/
+hooks
 # local env files
 .env.local
 .env.*.local

@@ -1,0 +1,29 @@
+{
+  "name": "comp208-project",
+  "displayName": "Cordova",
+  "version": "1.0.0",
+  "description": "comp208-project-frontend:hybrid project with Vue",
+  "main": "index.js",
+  "scripts": {
+    "dev":"cd vue-app && npm install && npm run build && cd .. && cordova build ios && cordova emulate"
+  },
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": "Richard Lee",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "cordova-ios": "^5.1.1"
+  },
+  "devDependencies": {
+    "cordova-plugin-whitelist": "^1.3.4"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {}
+    },
+    "platforms": [
+      "ios"
+    ]
+  }
+}

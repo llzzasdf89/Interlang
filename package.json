@@ -5,7 +5,8 @@
   "description": "comp208-project-frontend:hybrid project with Vue",
   "main": "index.js",
   "scripts": {
-    "dev": "cd vue-app && npm install && npm run build && cd .. && cordova build ios && cordova emulate"
+    "dev": "cd vue-app && npm run build && cd .. && cordova build ios && cordova emulate ios",
+    "compile": "cordova emulate ios"
   },
   "keywords": [
     "ecosystem:cordova"
@@ -13,14 +14,16 @@
   "author": "Richard Lee",
   "license": "Apache-2.0",
   "dependencies": {
-    "cordova-ios": "^5.1.1"
+    "cordova-ios": "^5.1.1",
+    "cordova-plugin-console": "^1.1.0"
   },
   "devDependencies": {
     "cordova-plugin-whitelist": "^1.3.4"
   },
   "cordova": {
     "plugins": {
-      "cordova-plugin-whitelist": {}
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-console": {}
     },
     "platforms": [
       "ios"

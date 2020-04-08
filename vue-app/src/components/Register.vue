@@ -116,7 +116,7 @@ export default {
     goNext: function () {
       const isLogin = this.$route.params.isLogin
       if (isLogin) {
-
+        this.$router.push('/index')
       } else {
 
       }

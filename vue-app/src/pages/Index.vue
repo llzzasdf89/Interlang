@@ -7,13 +7,13 @@
     <v-btn to="/index/home" >
     <v-icon>mdi-home-outline</v-icon>
     </v-btn>
-<v-btn to="/index/home">
+<v-btn to="/index/search">
     <v-icon>mdi-magnify</v-icon>
 </v-btn>
-<v-btn to="/index/home">
+<v-btn to="/index/post">
     <v-icon>mdi-plus-circle-outline</v-icon>
 </v-btn >
-<v-btn to="/index/home">
+<v-btn to="/index/notification">
     <v-icon>mdi-bell-outline</v-icon>
 </v-btn>
 <v-btn to="/index/user">

@@ -4,9 +4,9 @@
       <v-container fluid>
       <v-card elevation='0'>
         <v-tabs v-model="tab" background-color="light-blue" center-active dark grow>
-          <v-tab v-for="item in items" :key="item.tab">{{item.tab}}</v-tab>
+          <v-tab v-for="item in items" :key="item.content">{{item.tab}}</v-tab>
         </v-tabs>
-        <v-tabs-items v-model="tab" class="mb-4" v-for="item in items" :key="item.tab">
+        <v-tabs-items v-model="tab" class="mb-4" v-for="item in items" :key="item.content">
           <v-tab-item>
             <v-card class="mx-auto" color="#26c6da" dark max-width="400">
               <v-card-title>
@@ -55,9 +55,9 @@ export default {
       items: [
         { tab: '德语', content: 'Tab 1 Content' },
         { tab: '法语', content: 'Tab 2 Content' },
-        { tab: '英语', content: 'Tab 3 Content' },
-        { tab: '英语', content: 'Tab 3 Content' },
-        { tab: '英语', content: 'Tab 3 Content' }
+        { tab: '日语', content: 'Tab 3 Content' },
+        { tab: '法语', content: 'Tab 4 Content' },
+        { tab: '意大利语', content: 'Tab 5 Content' }
       ]
     }
   }

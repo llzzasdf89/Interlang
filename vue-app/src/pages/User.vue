@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-content class="grey lighten-5">
+    <v-content>
       <v-container fluid>
         <v-card class="d-flex align-center mt-6" outlined>
           <v-col cols="2">

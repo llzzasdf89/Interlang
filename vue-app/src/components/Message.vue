@@ -13,7 +13,7 @@
 <v-col cols="10" class='d-flex text-left'>
 <v-list >
 <v-list-item-title>
-<span class="font-weight-bold">Halala</span>&nbsp;回答了你的问题
+<span class="font-weight-bold">Richard</span>&nbsp;回答了你的问题
 </v-list-item-title>
 <v-list-item-subtitle>
     meistens einfach

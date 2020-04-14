@@ -68,7 +68,7 @@ export default {
           }
         },
         {
-          color: 'orange',
+          color: 'pink',
           title: '我的发音标准吗?',
           artist: '询问实际使用的示例',
           params: {

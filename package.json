@@ -15,6 +15,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "cordova-ios": "^5.1.1",
+    "cordova-plugin-camera": "^4.1.0",
     "cordova-plugin-console": "^1.1.0",
     "cordova-plugin-device": "^2.0.3"
   },
@@ -25,7 +26,8 @@
     "plugins": {
       "cordova-plugin-whitelist": {},
       "cordova-plugin-console": {},
-      "cordova-plugin-device": {}
+      "cordova-plugin-device": {},
+      "cordova-plugin-camera": {}
     },
     "platforms": [
       "ios"

@@ -2,17 +2,17 @@
 <v-app>
 <v-container fluid>
 <v-content>
-<Message>
-</Message>
+<notificationMessage>
+</notificationMessage>
 </v-content>
 </v-container>
 </v-app>
 </template>
 <script>
-import Message from '@/components/Message'
+import notificationMessage from '@/components/notificationMessage'
 export default {
   components: {
-    Message
+    notificationMessage
   }
 }
 </script>

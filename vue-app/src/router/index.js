@@ -9,6 +9,7 @@ import Notification from '@/pages/Notification'
 import Search from '@/pages/Search'
 import Post from '@/pages/Post'
 import postDetail from '@/pages/postDetail'
+import messageDetail from '@/pages/messageDetail'
 Vue.use(VueRouter)
 
 const routes = [
@@ -18,18 +19,21 @@ const routes = [
   },
   {
     path: '/index',
-    name: 'Index',
     component: Index,
     children: [
       {
         path: '',
-        name: 'Home',
         component: Home
       },
       {
         path: 'home',
         name: 'Home',
-        component: Home
+        component: Home,
+        children: [{
+          path: 'messageDetail',
+          name: 'messageDetail',
+          component: messageDetail
+        }]
       },
       {
         path: 'user',

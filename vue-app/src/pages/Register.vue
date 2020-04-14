@@ -18,7 +18,7 @@
                     name="username"
                     type="text"
                     prepend-icon="mdi-account-circle"
-                    v-model = "username"
+                    v-model="username"
                     clearable
                     required
                   />
@@ -28,7 +28,7 @@
                     label="Password"
                     name="password"
                     type="password"
-                    v-model = "password"
+                    v-model="password"
                     prepend-icon="mdi-lock"
                     clearable
                     required
@@ -55,14 +55,14 @@
                     v-show="!$route.params.isLogin"
                     required
                   >
-                  <template v-slot:append>
-              <v-tooltip bottom >
-                <template v-slot:activator="{ on }">
-                  <v-icon v-on="on">mdi-send</v-icon>
-                </template>
-                I'm a tooltip
-              </v-tooltip>
-            </template>
+                    <template v-slot:append>
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                          <v-icon v-on="on">mdi-send</v-icon>
+                        </template>
+                        I'm a tooltip
+                      </v-tooltip>
+                    </template>
                   </v-text-field>
                   <v-text-field
                     id="verificationCode"
@@ -118,12 +118,9 @@ export default {
       if (isLogin) {
         this.$router.push('/index')
       } else {
-
       }
     },
-    sendCodeMail: function () {
-
-    }
+    sendCodeMail: function () {}
   }
 }
 </script>

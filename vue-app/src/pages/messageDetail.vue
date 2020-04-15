@@ -1,18 +1,17 @@
 <template>
 
 <v-container>
-    {{msgID}}
-<Message>
-
-</Message>
+<Message> </Message>
+<MessageBar></MessageBar>
 </v-container>
-
 </template>
 
 <script>
-import Message from '@/components/Message'
+import Message from '@/components/message'
+import MessageBar from '@/components/messageBar'
 export default {
   components: {
+    MessageBar,
     Message
   },
   computed: {

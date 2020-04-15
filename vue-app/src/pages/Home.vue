@@ -1,7 +1,7 @@
 <template>
     <v-content>
       <router-view></router-view>
-      <v-container v-show="!$route.params.msgID">
+      <v-container v-if="!$route.params.msgID">
         <v-card elevation="0">
           <v-tabs v-model="tab" background-color="light-blue" center-active dark grow>
             <v-tab v-for="item in items" :key="item.content">{{item.tab}}</v-tab>

@@ -6,10 +6,11 @@ import Register from '@/pages/Register'
 import Home from '@/pages/Home'
 import User from '@/pages/User'
 import Notification from '@/pages/Notification'
-import Search from '@/pages/Search'
+import Friends from '@/pages/Friends'
 import Post from '@/pages/Post'
 import postDetail from '@/pages/postDetail'
 import messageDetail from '@/pages/messageDetail'
+import friendDetail from '@/pages/friendDetail'
 Vue.use(VueRouter)
 
 const routes = [
@@ -56,9 +57,16 @@ const routes = [
         }]
       },
       {
-        path: 'search',
-        name: 'Search',
-        component: Search
+        path: 'friends',
+        name: 'Friends',
+        component: Friends,
+        children: [
+          {
+            path: 'friendDetail',
+            name: 'friendDetail',
+            component: friendDetail
+          }
+        ]
       }
     ]
   },

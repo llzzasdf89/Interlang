@@ -14,7 +14,7 @@
       <v-btn to="/index/home" value='home'>
         <v-icon>mdi-home-outline</v-icon>
       </v-btn>
-      <v-btn to="/index/search" value='search'>
+      <v-btn to="/index/friends" value='friends'>
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
       <v-btn to="/index/post" value='post' >
@@ -43,7 +43,8 @@ export default {
     },
     iconShow: function () {
       const name = this.$route.name
-      if (name === 'postDetail') return true
+      const iconShowPath = ['postDetail', 'messageDetail', 'friendDetail']
+      if (iconShowPath.includes(name)) return true
       return false
     }
   },

@@ -16,14 +16,7 @@
               <v-icon class="img-icon-delete-pos" @click="deleteImg">mdi-close-box</v-icon>
             </v-col>
           </v-row>
-          <v-row>
-            <v-col cols="12">
-              <span>Tags:</span>
-              <v-chip-group multiple active-class="primary--text" column v-model="selectedTags">
-                <v-chip v-for="tag in tags" :key="tag" :value="tag">{{ tag }}</v-chip>
-              </v-chip-group>
-            </v-col>
-          </v-row>
+          <tags></tags>
         </v-form>
         <v-divider></v-divider>
       </v-col>
@@ -51,8 +44,10 @@ import detailTemplateA from '@/components/detailTemplate_A'
 import detailTemplateB from '@/components/detailTemplate_B'
 import detailTemplateC from '@/components/detailTemplate_C'
 import detailTemplateD from '@/components/detailTemplate_D'
+import tags from '@/components/tags'
 export default {
   components: {
+    tags,
     detailBars,
     detailTemplateA,
     detailTemplateB,
@@ -75,20 +70,6 @@ export default {
       input: '',
       inputB: '',
       selectedLanguage: '',
-      tags: [
-        'cuisine',
-        'travel',
-        'movie',
-        'music',
-        'medical',
-        'treatment',
-        'education',
-        'job hunting',
-        'shopping',
-        'sports',
-        'entertainment'
-      ],
-      selectedTags: [],
       valid: false,
       previewImage: ''
     }

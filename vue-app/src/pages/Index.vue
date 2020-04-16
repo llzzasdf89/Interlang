@@ -43,7 +43,7 @@ export default {
     },
     iconShow: function () {
       const name = this.$route.name
-      const iconShowPath = ['postDetail', 'messageDetail', 'friendDetail']
+      const iconShowPath = ['postDetail', 'messageDetail', 'friendDetail', 'Setting']
       if (iconShowPath.includes(name)) return true
       return false
     }

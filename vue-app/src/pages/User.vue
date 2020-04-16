@@ -1,6 +1,7 @@
 <template>
   <v-app>
-    <v-content>
+    <router-view></router-view>
+    <v-content v-show="$route.name==='User'">
       <v-container fluid>
         <v-card class="d-flex align-center mt-6" outlined>
           <v-col cols="2">
@@ -17,27 +18,29 @@
         </v-card>
         <v-card outlined class="mt-6">
           <v-row no-gutters>
-            <v-col cols="6">
+            <v-col cols="5">
               <v-list-item two-line>
-                <v-list-item-content class="text-left">
-                  <v-list-item-title class="capition">提问次数</v-list-item-title>
-                  <v-list-item-subtitle class="d-flex align-center justify-space-between display-1">
-                    <v-icon large>mdi-help-box</v-icon>2
+                <v-list-item-content class="text-center">
+                  <v-list-item-title class="capition">正在关注</v-list-item-title>
+                  <v-list-item-subtitle class="display-1">
+                     2
                   </v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
             </v-col>
-            <v-col cols="6">
+            <v-col cols='2'><v-divider vertical></v-divider></v-col>
+            <v-col cols="5">
               <v-list-item two-line>
-                <v-list-item-content class="text-left">
-                  <v-list-item-title class="capition">回答次数</v-list-item-title>
-                  <v-list-item-subtitle class="d-flex align-center justify-space-between display-1">
-                    <v-icon large>mdi-forum</v-icon>20
+                <v-list-item-content class="text-center">
+                  <v-list-item-title class="capition">粉丝</v-list-item-title>
+                  <v-list-item-subtitle class="display-1">
+                        2
                   </v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
             </v-col>
           </v-row>
+          <v-divider></v-divider>
           <v-row v-for="n in items" :key="n.value">
             <v-col cols="12" class="d-flex justify-space-around">
               <v-list-item>
@@ -50,76 +53,36 @@
             </v-col>
           </v-row>
         </v-card>
-        <v-card outlined class="mt-6">
-          <v-subheader>REPORTS</v-subheader>
-          <v-list>
-            <v-list-group>
-              <template v-slot:activator>
-                <v-list-item-content>母语</v-list-item-content>
-              </template>
-              <v-list-item>
-                <v-list-item-content>
-                  <v-list-item-title class="d-flex px-10 justify-space-between">
-                    {{motherLanguage.language}}
-                    <span>{{motherLanguage.value}}</span>
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-group>
-            <v-divider></v-divider>
-            <v-list-group>
-              <template v-slot:activator>
-                <v-list-item-content>你所感兴趣的语言</v-list-item-content>
-              </template>
-              <v-list-item v-for="n in interstingLanguageItems" :key="n.value">
-                <v-list-item-content>
-                  <v-list-item-title class="d-flex px-10 justify-space-between">
-                    {{n.language}}
-                    <span>{{n.value}}</span>
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-group>
-            <v-divider></v-divider>
-            <v-list-group>
-              <template v-slot:activator>
-                <v-list-item-content>你所熟悉的国家</v-list-item-content>
-              </template>
-              <v-list-item v-for="n in familarCountries" :key="n">
-                <v-list-item-content>
-                  <v-list-item-title class="d-flex px-10 justify-space-between">{{n}}</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-group>
-            <v-divider></v-divider>
-            <v-list-group>
-              <template v-slot:activator>
-                <v-list-item-content>你所感兴趣的国家</v-list-item-content>
-              </template>
-              <v-list-item v-for="n in interstingCountries" :key="n">
-                <v-list-item-content>
-                  <v-list-item-title class="d-flex px-10 justify-space-between">{{n}}</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-group>
-            <v-divider></v-divider>
-          </v-list>
-        </v-card>
+        <userReport></userReport>
+        <v-row>
+          <v-col cols='12'> <v-btn block rounded x-large color="primary" @click="toSetting">设置</v-btn></v-col>
+        </v-row>
       </v-container>
     </v-content>
   </v-app>
 </template>
 <script>
+import userReport from '@/components/userReport'
 export default {
-  data: () => ({
-    items: [{ icon: 'mdi-thumb-up', text: '被点赞的次数', value: 20 }, { icon: 'mdi-crown', text: '被选为最佳答案的次数', value: 5 }, { icon: 'mdi-bookmark', text: '书签', value: 30 }],
-    motherLanguage: { language: '中文', value: 5 },
-    interstingLanguageItems: [
-      { language: '英语', value: 2 },
-      { language: '德语', value: 3 }
-    ],
-    familarCountries: ['美国', '加拿大', '瑞士'],
-    interstingCountries: ['美国', '中国']
-  })
+  components: {
+    userReport
+  },
+  data: function () {
+    return {
+      items: [{ icon: 'mdi-thumb-up', text: '被点赞的次数', value: 20 }, { icon: 'mdi-crown', text: '被选为最佳答案的次数', value: 5 }, { icon: 'mdi-bookmark', text: '书签', value: 30 }],
+      motherLanguage: { language: '中文', value: 5 },
+      interstingLanguageItems: [
+        { language: '英语', value: 2 },
+        { language: '德语', value: 3 }
+      ],
+      familarCountries: ['美国', '加拿大', '瑞士'],
+      interstingCountries: ['美国', '中国']
+    }
+  },
+  methods: {
+    toSetting: function () {
+      this.$router.push({ name: 'Setting' })
+    }
+  }
 }
 </script>

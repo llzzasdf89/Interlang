@@ -1,9 +1,9 @@
 <template>
 <div>
-<v-list three-line>
+<v-list three-line class="text-left">
 
         <v-list-item>
-          <v-list-item-avatar>
+          <v-list-item-avatar size='60'>
             <v-img src="@/assets/IMG_3154.jpeg"></v-img>
           </v-list-item-avatar>
 

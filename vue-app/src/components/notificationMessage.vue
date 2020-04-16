@@ -4,7 +4,7 @@
       <v-col cols="2">
         <v-list>
           <v-list-item>
-            <v-list-item-avatar class="message-avatar">
+            <v-list-item-avatar class="message-avatar" size='50'>
               <v-img src="@/assets/IMG_3154.jpeg"></v-img>
             </v-list-item-avatar>
           </v-list-item>

@@ -11,6 +11,7 @@ import Post from '@/pages/Post'
 import postDetail from '@/pages/postDetail'
 import messageDetail from '@/pages/messageDetail'
 import friendDetail from '@/pages/friendDetail'
+import Setting from '@/pages/Setting'
 Vue.use(VueRouter)
 
 const routes = [
@@ -39,7 +40,14 @@ const routes = [
       {
         path: 'user',
         name: 'User',
-        component: User
+        component: User,
+        children: [
+          {
+            path: 'setting',
+            name: 'Setting',
+            component: Setting
+          }
+        ]
       },
       {
         path: 'notification',

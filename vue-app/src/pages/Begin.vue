@@ -5,6 +5,7 @@
       <v-container fluid class="fill-height align-end justify-center">
         <v-col cols="12">
           <v-card flat>
+            <div><img src='@/assets/Logo.png' class='logo'></div>
             <v-card-title
               class="d-block display-1 font-weight-bold blue--text text--darken-1"
             >InterLang</v-card-title>
@@ -38,6 +39,12 @@
     </v-content>
   </v-app>
 </template>
+<style scoped>
+.logo {
+      height:150px;
+      border-radius:50%;
+}
+</style>
 <script>
 export default {
   name: 'Begin',

@@ -1,7 +1,7 @@
 <template>
 <v-app app>
 <router-view></router-view>
-<v-content class="text-left" v-if="!$route.params.userID">
+<v-content v-if="!$route.params.userID">
 <friendItem @click.native='toFriendDetail(1)'>
 
 </friendItem>

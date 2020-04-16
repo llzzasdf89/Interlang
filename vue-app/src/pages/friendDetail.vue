@@ -13,10 +13,11 @@
             <span class="subtitle-2">消息</span>
           </v-col>
           <v-col cols="6" class="d-flex flex-column align-center">
-            <v-btn icon>
-              <v-icon>mdi-plus-box-outline</v-icon>
+            <v-btn icon @click='focus'>
+              <v-icon v-if='!isFocus'>mdi-plus-box-outline</v-icon>
+              <v-icon v-else>mdi-check</v-icon>
             </v-btn>
-            <span class="subtitle-2">关注</span>
+            <span class="subtitle-2">{{focusText}}</span>
           </v-col>
         </v-row>
       </v-footer>
@@ -28,6 +29,20 @@ import friendItem from '@/components/friendItem'
 import tags from '@/components/tags'
 import userReport from '@/components/userReport'
 export default {
+  data: function () {
+    return {
+      isFocus: false,
+      focusText: '关注'
+    }
+  },
+  methods: {
+    focus: function () {
+      const isFocus = this.$data.isFocus
+      this.$data.isFocus = !isFocus
+      if (isFocus) this.$data.focusText = '关注'
+      else this.$data.focusText = '已关注'
+    }
+  },
   components: {
     friendItem,
     tags,

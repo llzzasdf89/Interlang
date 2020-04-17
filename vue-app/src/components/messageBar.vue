@@ -31,7 +31,6 @@
 </template>
 <script>
 // eslint-disable-next-line no-unused-vars
-import { store } from '@/common/store'
 export default {
   watch: {
     textareaInput: function (n, o) {
@@ -50,15 +49,19 @@ export default {
     }
   },
   mounted () {
-    store.textarea = this.$refs.input.$refs.input // textarea的DOM绑定到全局共享变量store中
+    const store = this.$store
+    const textAreaDom = this.$refs.input.$refs.input
+    store.commit('appendDom', textAreaDom)// textarea的DOM绑定到Vuex的全局变量store中)
   },
   methods: {
     load: function () {
       this.$data.loading = !this.$data.loading
-      setTimeout(() => (this.$data.loading = false), 3000)
+      setTimeout(() => {
+        this.$data.loading = false
+        this.$emit('showAlert')
+      }, 3000)
     },
     sendComment: function () {
-      console.log(this.$data.textareaInput)
     }
   }
 }

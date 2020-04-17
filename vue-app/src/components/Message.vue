@@ -50,12 +50,12 @@
 }
 </style>
 <script>
-import { store } from '@/common/store'
 export default {
   props: ['type'],
   methods: {
     changeState: function () {
-      store.textarea.click()
+      const store = this.$store
+      store.commit('clickOnDom')
     }
   }
 }

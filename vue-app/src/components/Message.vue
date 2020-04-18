@@ -12,17 +12,17 @@
         <v-card-text>
           <div>
             <v-icon left small>mdi-message-text-outline</v-icon>
-            <span class="subtitle-2 d-inline-block mr-2">母语</span>
-            <span class="subtitle-2 font-weight-black pb-4">中文</span>
+            <span class="subtitle-2 d-inline-block mr-2">Mother Togue</span>
+            <span class="subtitle-2 font-weight-black pb-4">Chinese</span>
           </div>
           <div :class="type==='comment'?'hiddenInput':''">
             <v-icon left small>mdi-message-text-outline</v-icon>
-            <span class="subtitle-2 font-weight-black">中文(简体)</span>
+            <span class="subtitle-2 font-weight-black">Chinese</span>
           </div>
-          <p :class="type==='comment'?'hiddenInput':''">关于中文的问题</p>
+          <p :class="type==='comment'?'hiddenInput':''">Question about Chinese</p>
           <div
             class="text--primary"
-          >I don't like that.and I don't like it when you say things like that.用 中文 怎么说?</div>
+          >I don't like that.and I don't like it when you say things like that.<br/>How to express it in Chinese?</div>
           <div class="text-center">
           </div>
           <div class="mt-2">

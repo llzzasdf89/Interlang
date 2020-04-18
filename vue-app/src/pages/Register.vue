@@ -12,7 +12,7 @@
                 </v-row>
               </v-toolbar>
               <v-card-text>
-                <v-form>
+                <v-form v-model='isDataValid' v-if='!$route.params.isLogin'>
                   <v-text-field
                     label="Username"
                     name="username"
@@ -20,6 +20,7 @@
                     prepend-icon="mdi-account-circle"
                     v-model="username"
                     clearable
+                    :rules='usernameRules'
                     required
                   />
 
@@ -29,6 +30,7 @@
                     name="password"
                     type="password"
                     v-model="password"
+                    :rules='passwordRules'
                     prepend-icon="mdi-lock"
                     clearable
                     required
@@ -40,8 +42,9 @@
                     v-model="repassword"
                     type="password"
                     clearable
+                    :rules='confirmRules'
                     prepend-icon="mdi-lock"
-                    v-show="!$route.params.isLogin"
+                    v-if="!$route.params.isLogin"
                     required
                   />
                   <v-text-field
@@ -50,17 +53,24 @@
                     name="email"
                     type="email"
                     v-model="email"
-                    clearable
+                    :rules='emailRules'
                     prepend-icon="mdi-email"
                     v-show="!$route.params.isLogin"
                     required
                   >
                     <template v-slot:append>
                       <v-tooltip bottom>
-                        <template v-slot:activator="{ on }">
-                          <v-icon v-on="on">mdi-send</v-icon>
+                        <template v-slot:activator = "{ on }">
+                          <v-btn v-on='on' icon :loading='vCodeLoading'  :disabled='!email' @click='sendCodeMail'>
+                             <v-icon>mdi-send</v-icon>
+                             <template v-slot:loader>
+                                    <span>
+                                        {{seconds}}
+                                    </span>
+                                  </template>
+                            </v-btn>
                         </template>
-                        I'm a tooltip
+                        click to send verification code
                       </v-tooltip>
                     </template>
                   </v-text-field>
@@ -72,14 +82,39 @@
                     clearable
                     v-model="verificationCode"
                     prepend-icon="mdi-ticket-confirmation-outline"
-                    v-show="!$route.params.isLogin"
+                    :rules='verificationCodeRules'
+                    v-if="!$route.params.isLogin"
+                    required
+                  />
+                </v-form>
+                <v-form v-else v-model='isDataValid'>
+                   <v-text-field
+                    label="Username"
+                    name="username"
+                    type="text"
+                    prepend-icon="mdi-account-circle"
+                    v-model="username"
+                    clearable
+                    :rules='[usernameRules[0]]'
+                    required
+                  />
+
+                  <v-text-field
+                    id="password"
+                    label="Password"
+                    name="password"
+                    type="password"
+                    v-model="password"
+                    :rules='[passwordRules[0]]'
+                    prepend-icon="mdi-lock"
+                    clearable
                     required
                   />
                 </v-form>
               </v-card-text>
               <v-card-actions>
                 <v-spacer />
-                <v-btn color="primary" @click="goNext">{{title}}</v-btn>
+                <v-btn color="primary" @click="submitData" :disabled='!isDataValid'>{{title}}</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -88,7 +123,9 @@
     </v-content>
   </v-app>
 </template>
+<style scoped>
 
+</style>
 <script>
 export default {
   props: {
@@ -102,25 +139,59 @@ export default {
   },
   data: function () {
     return {
+      isDataValid: false,
+      vCodeLoading: false,
+      seconds: 60,
+      usernameRules: [
+        v => !!v || 'username is required',
+        v => /^[a-zA-Z0-9_-]{4,16}$/.test(v) || 'The user name consists of 4-16 letters, numbers, underscores, and subtractions, and must begin with a letter'],
       username: '',
       password: '',
+      passwordRules: [
+        v => !!v || 'password is required',
+        v => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(v) || 'Password should contain least 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 digit:'
+      ],
       repassword: '',
+      confirmRules: [v => v === this.$data.password || 'The password is not equal', v => v === this.$data.password || 'The password is not equal'],
       email: '',
-      verificationCode: ''
+      emailRules: [v => !!v || 'Email is required', v => /^([a-zA-Z]|[0-9])(\w|\\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(v) || 'email is invalid'],
+      verificationCode: '',
+      verificationCodeRules: [v => !!v || 'verification code is required', v => /^\d{6}$/.test(v) || 'verificationCode should be 6 digits number']
     }
   },
   methods: {
     goBack: function () {
       this.$router.go(-1)
     },
-    goNext: function () {
+    submitData: function () {
       const isLogin = this.$route.params.isLogin
-      if (isLogin) {
-        this.$router.push('/index')
-      } else {
+      const params = {
+        username: this.$data.username,
+        password: this.$data.password
       }
+      if (!isLogin) {
+        params.repassword = this.$data.repassword
+        params.verificationCode = this.$data.verificationCode
+        params.email = this.$data.email
+      }
+      this.register_login(params)
     },
-    sendCodeMail: function () {}
+    register_login: function (paramsObj) {
+      this.http.post('/user/login', paramsObj).then(res => {
+      }).catch(err => {
+        toString(err)
+      })
+    },
+    sendCodeMail: function () {
+      this.$data.vCodeLoading = true
+      const It = setInterval(() => {
+        if (this.$data.seconds === 0) {
+          this.$data.vCodeLoading = false
+          clearInterval(It)
+          this.$seconds = 60
+        } else this.$data.seconds--
+      }, 1000)
+    }
   }
 }
 </script>

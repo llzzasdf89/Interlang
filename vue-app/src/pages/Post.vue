@@ -17,64 +17,64 @@ export default {
       items: [
         {
           color: 'black',
-          title: '这个怎么说?',
+          title: 'How to express this?',
           params: {
             type: 'A'
           }
         },
         {
           color: 'blue',
-          title: '这个是什么意思？',
+          title: 'What does this mean？',
           params: {
             type: 'D',
-            endSentence: '是什么意思?'
+            endSentence: 'The meaning?'
           }
         },
         {
           color: 'primary',
-          title: '区别是什么?',
-          artist: '当你无法区分时',
+          title: 'What\'s the difference?',
+          artist: 'When you don\'t know  difference between A and B',
           params: {
             type: 'B',
-            endSentence: `的区别是什么？
-                          如果解释起来比较困难，请举出一些例句`
+            endSentence: `What's the difference？
+                          If it's hard to explain, please list out some example`
           }
         }, {
           color: 'green',
-          title: '对国家或者地区进行提问',
-          artist: '关于语言、文化以及其他的任何问题都可以随便提问',
+          title: 'Questions about region',
+          artist: 'Ask any questions about the country or region',
           params: {
             type: 'C',
-            hint: '对国家、文化或者任何你想问的东西。你可以使用任何语言。'
+            hint: 'You can ask anything about that in any language。'
           }
         },
         {
           color: 'green',
-          title: '自由提问',
-          artist: '你可以不使用提问模版来提问关于语言和文化的问题',
+          title: 'Feel free to ask',
+          artist: 'you could use no tempaltes to ask questions',
           params: {
             type: 'C',
-            hint: '问题的内容不局限于语言和文化，你可以用任何一种语言提问任何其他你想提问的问题'
+            hint: 'The content is not limited to cultrue or region, ask anything'
           }
         },
         {
           color: 'pink',
-          title: '请用~~帮我造一下句子行吗?',
-          artist: '询问实际使用的示例',
+          title: 'Could you give me example?',
+          artist: 'Ask how to use some sentence in practical',
           params: {
             type: 'D',
-            hint: '您可以提供一些包含',
-            endSentence: '的例句吗？如果能提供多点生活中常用的句子就更好了'
+            hint: 'Could you offer some',
+            endSentence: 'instances？It\'s better if the examples are used in practical'
           }
         },
         {
           color: 'pink',
-          title: '我的发音标准吗?',
-          artist: '询问实际使用的示例',
+          title: 'Is my pronounciation correct?',
+          artist: 'Ask about your pronounciation',
           params: {
             type: 'D',
-            hint: '请教我',
-            endSentence: '怎么发音。'
+            hint: 'Please teach me',
+            endSentence: 'How to pronounce it'
           }
         }
       ]

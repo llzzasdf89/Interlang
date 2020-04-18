@@ -1,19 +1,19 @@
 <template>
   <div>
-    <v-text-field single-line outlined label="单词或者句子 " @input="subscribe" :rules="inputRules"></v-text-field>
+    <v-text-field single-line outlined label="word or sentence " @input="subscribe" :rules="inputRules"></v-text-field>
     <v-row>
-      <v-col cols="12">用</v-col>
+      <v-col cols="12">in</v-col>
     </v-row>
     <v-select
       outlined
       :items="languages"
-      label="语种"
+      label="language"
       class="mt-6"
       @change="selectLanguage"
       :rules="languageRules"
     ></v-select>
     <v-row>
-      <v-col cols="12">怎么说</v-col>
+      <v-col cols="12">How to express</v-col>
     </v-row>
   </div>
 </template>

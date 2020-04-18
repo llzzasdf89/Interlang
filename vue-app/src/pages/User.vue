@@ -12,7 +12,7 @@
           <v-col cols="10" class="text-start">
             <v-list two-line>
               <v-list-item-title class="font-weight-bold">RichardZhiLi</v-list-item-title>
-              <v-list-item-subtitle class="font-weight-medium">男</v-list-item-subtitle>
+              <v-list-item-subtitle class="font-weight-medium">♂</v-list-item-subtitle>
             </v-list>
           </v-col>
         </v-card>
@@ -21,7 +21,7 @@
             <v-col cols="5">
               <v-list-item two-line>
                 <v-list-item-content class="text-center">
-                  <v-list-item-title class="capition">正在关注</v-list-item-title>
+                  <v-list-item-title class="capition">Focus</v-list-item-title>
                   <v-list-item-subtitle class="display-1">
                      2
                   </v-list-item-subtitle>
@@ -32,7 +32,7 @@
             <v-col cols="5">
               <v-list-item two-line>
                 <v-list-item-content class="text-center">
-                  <v-list-item-title class="capition">粉丝</v-list-item-title>
+                  <v-list-item-title class="capition">Fans</v-list-item-title>
                   <v-list-item-subtitle class="display-1">
                         2
                   </v-list-item-subtitle>

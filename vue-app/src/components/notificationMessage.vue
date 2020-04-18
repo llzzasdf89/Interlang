@@ -13,7 +13,7 @@
       <v-col cols="10" class="d-flex text-left">
         <v-list>
           <v-list-item-title>
-            <span class="font-weight-bold">Richard</span>&nbsp;回答了你的问题
+            <span class="font-weight-bold">Richard</span>&nbsp;Answered your question
           </v-list-item-title>
           <v-list-item-subtitle>meistens einfach</v-list-item-subtitle>
           <v-list-item-content class="message-content py-0">
@@ -47,7 +47,7 @@ export default {
       const dt = new Date()
       const month = dt.getMonth() + 1
       const day = dt.getDate()
-      const date = `${month}月${day}日`
+      const date = `${month}.${day}`
       return date
     }
   }

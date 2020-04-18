@@ -11,7 +11,7 @@
               <v-card class="mx-auto" color="#26c6da" dark max-width="400">
                 <v-card-title>
                   <v-icon left small>mdi-message-text-outline</v-icon>
-                  <span class="subtitle-1 d-inline-block mr-2">母语</span>
+                  <span class="subtitle-1 d-inline-block mr-2">Mother tongue</span>
                   <span class="title font-weight-black">中文</span>
                 </v-card-title>
 
@@ -47,11 +47,14 @@ export default {
     return {
       tab: null,
       items: [
-        { tab: '德语', content: 'Tab 1 Content', id: 1 },
-        { tab: '法语', content: 'Tab 2 Content', id: 2 },
-        { tab: '日语', content: 'Tab 3 Content', id: 3 },
-        { tab: '法语', content: 'Tab 4 Content', id: 4 },
-        { tab: '意大利语', content: 'Tab 5 Content', id: 5 }
+        { tab: 'German', content: 'Tab 1 Content', id: 1 },
+        { tab: 'French', content: 'Tab 2 Content', id: 2 },
+        { tab: 'Japanese', content: 'Tab 3 Content', id: 3 },
+        { tab: 'Korean', content: 'Tab 4 Content', id: 4 },
+        { tab: 'Italian', content: 'Tab 6 Content', id: 5 },
+        { tab: 'Russian', content: 'Tab 7 Content', id: 6 },
+        { tab: 'Spanish', content: 'Tab 8 Content', id: 7 },
+        { tab: 'Italian', content: 'Tab 9 Content', id: 8 }
       ]
     }
   },

@@ -10,7 +10,7 @@
             <v-btn icon>
               <v-icon>mdi-message</v-icon>
             </v-btn>
-            <span class="subtitle-2">消息</span>
+            <span class="subtitle-2">chat</span>
           </v-col>
           <v-col cols="6" class="d-flex flex-column align-center">
             <v-btn icon @click='focus'>
@@ -32,15 +32,15 @@ export default {
   data: function () {
     return {
       isFocus: false,
-      focusText: '关注'
+      focusText: 'focus'
     }
   },
   methods: {
     focus: function () {
       const isFocus = this.$data.isFocus
       this.$data.isFocus = !isFocus
-      if (isFocus) this.$data.focusText = '关注'
-      else this.$data.focusText = '已关注'
+      if (isFocus) this.$data.focusText = 'focus'
+      else this.$data.focusText = 'focused'
     }
   },
   components: {

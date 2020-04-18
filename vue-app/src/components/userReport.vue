@@ -4,7 +4,7 @@
           <v-list>
             <v-list-group>
               <template v-slot:activator>
-                <v-list-item-content>母语</v-list-item-content>
+                <v-list-item-content>Mother Togue</v-list-item-content>
               </template>
               <v-list-item>
                 <v-list-item-content>
@@ -18,7 +18,7 @@
             <v-divider></v-divider>
             <v-list-group>
               <template v-slot:activator>
-                <v-list-item-content>你所感兴趣的语言</v-list-item-content>
+                <v-list-item-content>Intersted Languages</v-list-item-content>
               </template>
               <v-list-item v-for="n in interstingLanguageItems" :key="n.value">
                 <v-list-item-content>
@@ -32,7 +32,7 @@
             <v-divider></v-divider>
             <v-list-group>
               <template v-slot:activator>
-                <v-list-item-content>你所熟悉的国家</v-list-item-content>
+                <v-list-item-content>familiared Country</v-list-item-content>
               </template>
               <v-list-item v-for="n in familarCountries" :key="n">
                 <v-list-item-content>
@@ -43,7 +43,7 @@
             <v-divider></v-divider>
             <v-list-group>
               <template v-slot:activator>
-                <v-list-item-content>你所感兴趣的国家</v-list-item-content>
+                <v-list-item-content>Intersted Country</v-list-item-content>
               </template>
               <v-list-item v-for="n in interstingCountries" :key="n">
                 <v-list-item-content>
@@ -60,13 +60,13 @@ export default {
   data: function () {
     return {
       items: [{ icon: 'mdi-thumb-up', text: '被点赞的次数', value: 20 }, { icon: 'mdi-crown', text: '被选为最佳答案的次数', value: 5 }, { icon: 'mdi-bookmark', text: '书签', value: 30 }],
-      motherLanguage: { language: '中文', value: 5 },
+      motherLanguage: { language: 'Chinese', value: 5 },
       interstingLanguageItems: [
-        { language: '英语', value: 2 },
-        { language: '德语', value: 3 }
+        { language: 'English', value: 2 },
+        { language: 'Germany', value: 3 }
       ],
-      familarCountries: ['美国', '加拿大', '瑞士'],
-      interstingCountries: ['美国', '中国']
+      familarCountries: ['America', 'Canada', 'Swiss'],
+      interstingCountries: ['America', 'China']
     }
   }
 }

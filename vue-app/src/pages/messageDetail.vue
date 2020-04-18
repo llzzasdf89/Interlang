@@ -3,7 +3,7 @@
 <v-container>
 <Message > </Message>
 <v-alert type='success' transition="scale-transition" :value='showAlert'>
-回复成功
+reply success
 </v-alert>
 <MessageBar @showAlert='msgAlert' ></MessageBar>
 </v-container>

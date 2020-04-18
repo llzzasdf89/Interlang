@@ -1,12 +1,12 @@
 <template>
   <div>
-    这个问题关于
+    This question is about
     <v-row>
       <v-col cols="12">
         <v-select
           outlined
           :items="languages"
-          label="语种"
+          label="language"
           class="mt-6"
           @change="selectLanguage"
           :rules="languageRules"

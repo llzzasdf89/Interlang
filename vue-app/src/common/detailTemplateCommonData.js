@@ -1,7 +1,7 @@
 export const detailTemplateCommonData = {
   data () {
     return {
-      languages: ['英语', '法语', '德语', '中文'],
+      languages: ['English', 'French', 'Germany', 'Chinese'],
       selectedLangauge: '',
       languageRules: [v => !!v || 'Language must be selected'],
       inputRules: [v => !!v || 'Input is required'],

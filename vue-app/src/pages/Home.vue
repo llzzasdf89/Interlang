@@ -54,7 +54,7 @@ export default {
         { tab: 'Italian', content: 'Tab 6 Content', id: 5 },
         { tab: 'Russian', content: 'Tab 7 Content', id: 6 },
         { tab: 'Spanish', content: 'Tab 8 Content', id: 7 },
-        { tab: 'Italian', content: 'Tab 9 Content', id: 8 }
+        { tab: 'Portuguese', content: 'Tab 9 Content', id: 8 }
       ]
     }
   },

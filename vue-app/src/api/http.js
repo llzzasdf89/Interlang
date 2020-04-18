@@ -1,14 +1,17 @@
 import axios from 'axios'
 import router from '@/router/index'
+import qs from 'qs'
 axios.defaults.timeout = 30000
 axios.defaults.baseURL = 'http://101.132.114.219:8888'
-axios.defaults.withCredentials = true
 // http request 拦截器
 axios.interceptors.request.use(
   config => {
+    const fd = new FormData()
+    fd.append('username', config.data.username)
+    fd.append('password', config.data.password)
     // const token = getCookie('名称');注意使用的时候需要引入cookie方法，推荐js-cookie
     config.headers = {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'application/x-www-form-urlencoded'
     }
     // if(token){
     //   config.params = {'token':token}
@@ -59,13 +62,10 @@ export default {
   },
   post (url, data = {}) {
     return new Promise((resolve, reject) => {
-      axios.post(url, data)
+      axios.post(url, qs.stringify(data))
         .then(response => {
-          console.log(response)
-          resolve(response.data)
-        }, err => {
-          reject(err)
-        })
+          resolve(response)
+        }).catch(err => reject(err))
     })
   }
 }

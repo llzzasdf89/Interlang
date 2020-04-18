@@ -114,7 +114,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer />
-                <v-btn color="primary" @click="submitData" :disabled='!isDataValid'>{{title}}</v-btn>
+                <v-btn color="primary" @click="submitData" :disabled='!isDataValid' :loading='loginLoading'>{{title}}</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -141,6 +141,7 @@ export default {
     return {
       isDataValid: false,
       vCodeLoading: false,
+      loginLoading: false,
       seconds: 60,
       usernameRules: [
         v => !!v || 'username is required',
@@ -164,6 +165,7 @@ export default {
       this.$router.go(-1)
     },
     submitData: function () {
+      this.$data.loginLoading = true
       const isLogin = this.$route.params.isLogin
       const params = {
         username: this.$data.username,
@@ -177,9 +179,22 @@ export default {
       this.register_login(params)
     },
     register_login: function (paramsObj) {
+      const isLogin = this.$route.params.isLogin
       this.http.post('/user/login', paramsObj).then(res => {
+        const isSuccess = res.data.success
+        if (isSuccess && isLogin) {
+          alert('Login Success!')
+          this.$router.push('/index/user/setting')
+        } else if (isSuccess && !isLogin) {
+          alert('Register success!')
+          this.$router.goBack()
+        } else if (!isSuccess && isLogin) alert('Username or password error, please check again')
+        else if (!isSuccess && !isLogin) alert('Register failed, please check your information')
+        this.$data.loginLoading = false
       }).catch(err => {
-        toString(err)
+        console.log(err)
+        alert('Sorry,an error occured during the process, please try again')
+        this.$data.loginLoading = false
       })
     },
     sendCodeMail: function () {

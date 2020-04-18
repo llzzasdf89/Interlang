@@ -55,7 +55,7 @@
         </v-card>
         <userReport></userReport>
         <v-row>
-          <v-col cols='12'> <v-btn block rounded x-large color="primary" @click="toSetting">设置</v-btn></v-col>
+          <v-col cols='12'> <v-btn block rounded x-large color="primary" @click="toSetting">Settings</v-btn></v-col>
         </v-row>
       </v-container>
     </v-content>
@@ -69,7 +69,7 @@ export default {
   },
   data: function () {
     return {
-      items: [{ icon: 'mdi-thumb-up', text: '被点赞的次数', value: 20 }, { icon: 'mdi-crown', text: '被选为最佳答案的次数', value: 5 }, { icon: 'mdi-bookmark', text: '书签', value: 30 }],
+      items: [{ icon: 'mdi-thumb-up', text: '被点赞的次数', value: 20 }],
       motherLanguage: { language: '中文', value: 5 },
       interstingLanguageItems: [
         { language: '英语', value: 2 },

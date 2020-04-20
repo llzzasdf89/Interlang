@@ -15,7 +15,7 @@
       <v-col cols="12">
         <v-text-field single-line outlined label="words or sentences " @input="subscribe" :rules="inputRules"></v-text-field>
       </v-col>
-      <v-col cols="12" class="mb-4">和</v-col>
+      <v-col cols="12" class="mb-4">and</v-col>
       <v-col cols="12">
         <v-text-field single-line outlined label="words or sentences " @input="subscribeB" :rules="inputRules"></v-text-field>
       </v-col>

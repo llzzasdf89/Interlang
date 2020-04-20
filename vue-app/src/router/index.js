@@ -12,6 +12,8 @@ import postDetail from '@/pages/postDetail'
 import messageDetail from '@/pages/messageDetail'
 import friendDetail from '@/pages/friendDetail'
 import Setting from '@/pages/Setting'
+import Chat from '@/pages/Chat'
+import Focus from '@/pages/Focus'
 Vue.use(VueRouter)
 
 const routes = [
@@ -46,6 +48,11 @@ const routes = [
             path: 'setting',
             name: 'Setting',
             component: Setting
+          },
+          {
+            path: 'focus',
+            name: 'Focus',
+            component: Focus
           }
         ]
       },
@@ -72,7 +79,12 @@ const routes = [
           {
             path: 'friendDetail',
             name: 'friendDetail',
-            component: friendDetail
+            component: friendDetail,
+            children: [{
+              path: 'chat',
+              name: 'Chat',
+              component: Chat
+            }]
           }
         ]
       }

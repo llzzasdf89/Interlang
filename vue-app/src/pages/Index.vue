@@ -1,7 +1,7 @@
 <template>
-  <v-app id="index">
+  <v-app id="index" style="background:rgb(243,245,250)">
     <v-system-bar app window color="white"></v-system-bar>
-    <v-app-bar app dense dark class="text-center">
+    <v-app-bar app dense dark class="text-center" v-if='$route.name !== "Home"' >
       <v-row>
         <v-col cols="1" v-show="iconShow" @click="goBack">
           <v-icon>mdi-arrow-left</v-icon>
@@ -9,8 +9,10 @@
         <v-col :cols="iconShow?10:12">{{title}}</v-col>
       </v-row>
     </v-app-bar>
-    <router-view></router-view>
-    <v-bottom-navigation app grow color="blue text--lighten-3" bottom v-model="bottomNav">
+   <transition>
+  <router-view></router-view>
+</transition>
+    <v-bottom-navigation app grow color="blue text--lighten-3" bottom v-model="bottomNav" v-if="$route.name!=='Chat'">
       <v-btn to="/index/home" value='home'>
         <v-icon>mdi-home-outline</v-icon>
       </v-btn>
@@ -39,17 +41,24 @@ export default {
   computed: {
     title: function () {
       const name = this.$route.name || 'Home'
+      if (name === 'Focus') {
+        const title = this.$route.params.title
+        return title
+      }
       return name
     },
     iconShow: function () {
       const name = this.$route.name
-      const iconShowPath = ['postDetail', 'messageDetail', 'friendDetail', 'Setting']
+      const iconShowPath = ['postDetail', 'messageDetail', 'friendDetail', 'Setting', 'Chat', 'Focus']
       if (iconShowPath.includes(name)) return true
       return false
     }
   },
   methods: {
     goBack: function () {
+      if (this.$route.name === 'Chat') {
+        return this.$router.go(-2)
+      }
       this.$router.back()
     }
   }

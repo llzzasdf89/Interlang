@@ -1,6 +1,6 @@
 <template>
-<v-app>
-<v-container fluid>
+<v-app app style="background:rgb(243,245,250)">
+<v-container fluid >
 <v-content>
 <notificationMessage>
 </notificationMessage>

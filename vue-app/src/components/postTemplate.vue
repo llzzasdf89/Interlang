@@ -4,7 +4,7 @@
       <v-card :color="item.color" dark>
         <div class="d-flex flex-no-wrap justify-space-between text-no-wrap text-left">
           <div>
-            <v-card-title class="headline" v-text="item.title"></v-card-title>
+            <v-card-title class="title" v-text="item.title"></v-card-title>
 
             <v-card-subtitle v-text="item.artist"></v-card-subtitle>
           </div>

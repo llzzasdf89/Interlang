@@ -1,6 +1,8 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
+  <div id="app" style="background:rgb(243,245,250)">
+    <transition>
+  <router-view></router-view>
+</transition>
   </div>
 </template>
 

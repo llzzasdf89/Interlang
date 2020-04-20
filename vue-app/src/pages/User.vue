@@ -1,6 +1,8 @@
 <template>
-  <v-app>
-    <router-view></router-view>
+  <v-app style="background:rgb(243,245,250)">
+    <transition>
+  <router-view></router-view>
+</transition>
     <v-content v-show="$route.name==='User'">
       <v-container fluid>
         <v-card class="d-flex align-center mt-6" outlined>
@@ -18,7 +20,7 @@
         </v-card>
         <v-card outlined class="mt-6">
           <v-row no-gutters>
-            <v-col cols="5">
+            <v-col cols="5" @click='toFocus("Your Focus")'>
               <v-list-item two-line>
                 <v-list-item-content class="text-center">
                   <v-list-item-title class="capition">Focus</v-list-item-title>
@@ -29,7 +31,7 @@
               </v-list-item>
             </v-col>
             <v-col cols='2'><v-divider vertical></v-divider></v-col>
-            <v-col cols="5">
+            <v-col cols="5" @click='toFocus("Your Fans")'>
               <v-list-item two-line>
                 <v-list-item-content class="text-center">
                   <v-list-item-title class="capition">Fans</v-list-item-title>
@@ -54,9 +56,9 @@
           </v-row>
         </v-card>
         <userReport></userReport>
-        <v-row>
+        <v-footer app>
           <v-col cols='12'> <v-btn block rounded x-large color="primary" @click="toSetting">Settings</v-btn></v-col>
-        </v-row>
+        </v-footer>
       </v-container>
     </v-content>
   </v-app>
@@ -69,7 +71,7 @@ export default {
   },
   data: function () {
     return {
-      items: [{ icon: 'mdi-thumb-up', text: '被点赞的次数', value: 20 }],
+      items: [{ icon: 'mdi-thumb-up', text: 'Number of like you got', value: 20 }],
       motherLanguage: { language: '中文', value: 5 },
       interstingLanguageItems: [
         { language: '英语', value: 2 },
@@ -82,6 +84,14 @@ export default {
   methods: {
     toSetting: function () {
       this.$router.push({ name: 'Setting' })
+    },
+    toFocus: function (title) {
+      this.$router.push({
+        name: 'Focus',
+        params: {
+          title
+        }
+      })
     }
   }
 }

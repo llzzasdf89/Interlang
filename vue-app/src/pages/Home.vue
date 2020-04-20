@@ -1,14 +1,16 @@
 <template>
     <v-content>
-      <router-view></router-view>
-      <v-container v-if="!$route.params.msgID">
+      <transition>
+  <router-view></router-view>
+</transition>
+      <v-container v-if="!$route.params.msgID" style="background:rgb(243,245,250)">
         <v-card elevation="0">
           <v-tabs v-model="tab" background-color="light-blue" center-active dark grow>
             <v-tab v-for="item in items" :key="item.content">{{item.tab}}</v-tab>
           </v-tabs>
-          <v-tabs-items v-model="tab" class="mb-4" v-for="item in items" :key="item.id">
+          <v-tabs-items v-model="tab" v-for="item in items" :key="item.id" continuous>
             <v-tab-item @click='toMsgDetail(item.id)'>
-              <v-card class="mx-auto" color="#26c6da" dark max-width="400">
+              <v-card class="mx-auto cardBorder" max-width="400" elevation="0" >
                 <v-card-title>
                   <v-icon left small>mdi-message-text-outline</v-icon>
                   <span class="subtitle-1 d-inline-block mr-2">Mother tongue</span>
@@ -31,6 +33,10 @@
                       <v-icon class="mr-1">mdi-comment</v-icon>
                       <span class="subheading mr-2">256</span>
                     </v-row>
+                    <v-row align="center" justify="end">
+                      <v-icon class="mr-1">mdi-thumb-up</v-icon>
+                      <span class="subheading mr-2">256</span>
+                    </v-row>
                   </v-list-item>
                 </v-card-actions>
               </v-card>
@@ -40,7 +46,12 @@
       </v-container>
     </v-content>
 </template>
-
+<style scoped>
+.cardBorder{
+  border-top:10px solid rgb(243,245,250);
+  border-bottom:10px solid rgb(243,245,250);
+}
+</style>
 <script>
 export default {
   data: function () {

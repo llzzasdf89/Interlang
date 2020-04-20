@@ -1,6 +1,6 @@
 <template>
 
-<v-container>
+<v-container app fluid style="background:rgb(243,245,250)" class='fill-height d-flex flex-column'>
 <Message > </Message>
 <v-alert type='success' transition="scale-transition" :value='showAlert'>
 reply success

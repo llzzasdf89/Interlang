@@ -1,13 +1,13 @@
 <template>
-<v-app>
-<v-content>
-<router-view></router-view>
+<v-content style="background:rgb(243,245,250)">
+<transition>
+  <router-view></router-view>
+</transition>
 <v-container app v-if="!$route.params.type">
 <postTemplate v-for='v in items' :key='v.id' :item="v" @click.native="toPostDetail(v.params)">
 </postTemplate>
 </v-container>
 </v-content>
-</v-app>
 </template>
 <script>
 import postTemplate from '@/components/postTemplate'
@@ -16,65 +16,53 @@ export default {
     return {
       items: [
         {
-          color: 'black',
-          title: 'How to express this?',
+          color: 'blue lighten-1',
+          title: 'How do you say "..."?',
           params: {
             type: 'A'
           }
         },
         {
-          color: 'blue',
-          title: 'What does this mean？',
+          color: 'blue lighten-1',
+          title: 'What does "..." mean？',
           params: {
             type: 'D',
             endSentence: 'The meaning?'
           }
         },
         {
-          color: 'primary',
+          color: 'blue lighten-1',
           title: 'What\'s the difference?',
-          artist: 'When you don\'t know  difference between A and B',
+          artist: 'Please show me the difference between "..." and "..."',
           params: {
             type: 'B',
             endSentence: `What's the difference？
                           If it's hard to explain, please list out some example`
           }
         }, {
-          color: 'green',
-          title: 'Questions about region',
-          artist: 'Ask any questions about the country or region',
+          color: 'blue lighten-1',
+          title: 'Please make a sentence with "..."',
           params: {
             type: 'C',
             hint: 'You can ask anything about that in any language。'
           }
         },
         {
-          color: 'green',
-          title: 'Feel free to ask',
-          artist: 'you could use no tempaltes to ask questions',
-          params: {
-            type: 'C',
-            hint: 'The content is not limited to cultrue or region, ask anything'
-          }
-        },
-        {
-          color: 'pink',
-          title: 'Could you give me example?',
-          artist: 'Ask how to use some sentence in practical',
-          params: {
-            type: 'D',
-            hint: 'Could you offer some',
-            endSentence: 'instances？It\'s better if the examples are used in practical'
-          }
-        },
-        {
-          color: 'pink',
+          color: 'blue lighten-1',
           title: 'Is my pronounciation correct?',
-          artist: 'Ask about your pronounciation',
+          artist: 'Could you please record yours?',
           params: {
             type: 'D',
             hint: 'Please teach me',
             endSentence: 'How to pronounce it'
+          }
+        },
+        {
+          color: 'blue lighten-3',
+          title: 'Ask a question without template',
+          params: {
+            type: 'C',
+            hint: 'The content is not limited to cultrue or region, ask anything'
           }
         }
       ]

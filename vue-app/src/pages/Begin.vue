@@ -1,7 +1,9 @@
 <template>
   <v-app id="inspire">
     <v-content>
-      <router-view></router-view>
+      <transition>
+  <router-view></router-view>
+</transition>
       <v-container fluid class="fill-height align-end justify-center">
         <v-col cols="12">
           <v-card flat>

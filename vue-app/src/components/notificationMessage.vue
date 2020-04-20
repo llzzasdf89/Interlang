@@ -1,18 +1,18 @@
 <template>
-  <div>
+  <div >
     <v-row dense>
       <v-col cols="2">
-        <v-list>
-          <v-list-item>
-            <v-list-item-avatar class="message-avatar" size='50'>
+        <v-list style="background:rgb(243,245,250)">
+          <v-list-item >
+            <v-list-item-avatar class="message-avatar" size='50' >
               <v-img src="@/assets/IMG_3154.jpeg"></v-img>
             </v-list-item-avatar>
           </v-list-item>
         </v-list>
       </v-col>
-      <v-col cols="10" class="d-flex text-left">
-        <v-list>
-          <v-list-item-title>
+      <v-col cols="10" class="d-flex text-left" >
+        <v-list style="background:rgb(243,245,250)">
+          <v-list-item-title >
             <span class="font-weight-bold">Richard</span>&nbsp;Answered your question
           </v-list-item-title>
           <v-list-item-subtitle>meistens einfach</v-list-item-subtitle>

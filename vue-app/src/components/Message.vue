@@ -28,10 +28,14 @@
           <div class="mt-2">
          <v-row dense>
               <v-col cols="2">
-                <v-icon size="20px" @click='changeState'>mdi-message-reply</v-icon>
+                <v-btn @click='changeState' icon>
+                  <v-icon size="20px">mdi-message-reply</v-icon>
+                </v-btn>
               </v-col>
               <v-col cols="2">
-                <v-icon size="22px">mdi-bookmark</v-icon>
+                <v-btn icon @click='like' :loading='likeLoading' >
+                  <v-icon size="22px">{{liked?'mdi-thumb-up':'mdi-thumb-up-outline'}}</v-icon>
+                </v-btn>
               </v-col>
             </v-row>
           </div>
@@ -52,10 +56,23 @@
 <script>
 export default {
   props: ['type'],
+  data: function () {
+    return {
+      liked: false,
+      likeLoading: false
+    }
+  },
   methods: {
     changeState: function () {
       const store = this.$store
       store.commit('clickOnDom')
+    },
+    like: function () {
+      this.$data.likeLoading = true
+      setTimeout(() => {
+        this.$data.likeLoading = false
+        this.$data.liked = !this.$data.liked
+      }, 1000)
     }
   }
 }

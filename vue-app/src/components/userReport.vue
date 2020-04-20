@@ -29,29 +29,6 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list-group>
-            <v-divider></v-divider>
-            <v-list-group>
-              <template v-slot:activator>
-                <v-list-item-content>familiared Country</v-list-item-content>
-              </template>
-              <v-list-item v-for="n in familarCountries" :key="n">
-                <v-list-item-content>
-                  <v-list-item-title class="d-flex px-10 justify-space-between">{{n}}</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-group>
-            <v-divider></v-divider>
-            <v-list-group>
-              <template v-slot:activator>
-                <v-list-item-content>Intersted Country</v-list-item-content>
-              </template>
-              <v-list-item v-for="n in interstingCountries" :key="n">
-                <v-list-item-content>
-                  <v-list-item-title class="d-flex px-10 justify-space-between">{{n}}</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-group>
-            <v-divider></v-divider>
           </v-list>
         </v-card>
 </template>

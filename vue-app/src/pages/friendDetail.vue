@@ -1,13 +1,16 @@
 <template>
   <v-content>
-    <v-container app class="fill-height d-flex align-content-start fluid align-center">
+    <transition>
+  <router-view></router-view>
+</transition>
+    <v-container app class="fill-height d-flex align-content-start fluid align-center " v-if="$route.name!='Chat'" style="background:rgb(243,245,250)">
       <friendItem></friendItem>
       <tags :isDisabled="true" :textColor="'white'"></tags>
       <userReport class='mx-5'></userReport>
       <v-footer app>
         <v-row dense>
           <v-col cols="6" class="d-flex flex-column align-center">
-            <v-btn icon>
+            <v-btn icon @click='toChat'>
               <v-icon>mdi-message</v-icon>
             </v-btn>
             <span class="subtitle-2">chat</span>
@@ -41,6 +44,9 @@ export default {
       this.$data.isFocus = !isFocus
       if (isFocus) this.$data.focusText = 'focus'
       else this.$data.focusText = 'focused'
+    },
+    toChat: function () {
+      this.$router.push({ name: 'Chat' })
     }
   },
   components: {

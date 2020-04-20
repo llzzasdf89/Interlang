@@ -14,8 +14,8 @@ export default new Vuex.Store({
       firstLanguage: null,
       intersts: null
     },
-    motherTogues: ['German', 'French', 'Japanese', 'Korean', 'Italian', 'Russian', 'Spanish', 'Portuguese'],
-    interstedLanguages: ['German', 'French', 'Japanese', 'Korean', 'Italian', 'Russian', 'Spanish', 'Portuguese'],
+    languages: ['German', 'French', 'Japanese', 'Korean', 'Italian', 'Russian', 'Spanish', 'Portuguese', 'Chinese'],
+    levels: ['beginner', 'elementary', 'intermediate', 'advanced', 'proficient'],
     Dom: null
   },
   mutations: {
@@ -30,12 +30,6 @@ export default new Vuex.Store({
       if (Dom != null && Dom !== undefined && JSON.stringify(Dom) !== '{}') {
         Dom.click()
       }
-    },
-    removeLanguage (state, lan) {
-      const motherTogues = state.motherTogues
-      const lanIndex = motherTogues.indexOf(lan)
-      state.motherTogues.splice(lanIndex, 1)
-      state.motherTogues = motherTogues
     }
   },
   actions: {

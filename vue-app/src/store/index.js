@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     token: null,
+    unreadNotificationNum: 0,
     user: {
       username: null,
       name: null,
@@ -22,8 +23,11 @@ export default new Vuex.Store({
     appendDom (state, Dom) {
       state.Dom = Dom
     },
-    setToken (state, token) {
+    updateToken (state, token) {
       state.token = token
+    },
+    updateUnread (state, unreadNum) {
+      state.unreadNotificationNum = unreadNum
     },
     clickOnDom () {
       const Dom = this.state.Dom

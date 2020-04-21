@@ -11,7 +11,7 @@
             <v-card-title
               class="d-block display-1 font-weight-bold blue--text text--darken-1"
             >InterLang</v-card-title>
-            <v-card-subtitle class="subtitle-1 font-weight-medium">A global Q&A community</v-card-subtitle>
+            <v-card-subtitle class="subtitle-1 font-weight-medium">A Multi-lingual Learning and Culture Exchange Comminuty</v-card-subtitle>
           </v-card>
         </v-col>
         <v-row align="end" justify="center" class="mx-12" height="500px">

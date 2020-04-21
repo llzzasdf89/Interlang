@@ -10,10 +10,10 @@
             @inputB="getValB"
           ></detailTemplate>
           <v-divider></v-divider>
-          <v-row v-show="previewImage" class="my-2">
+          <v-row v-if="fileObj !== null" class="my-2">
             <v-col cols="12" class="img-container-pos">
-              <v-img :src="previewImage" height="150px" width="150px" class="border"></v-img>
-              <v-icon class="img-icon-delete-pos" @click="deleteImg">mdi-close-box</v-icon>
+              <v-img :src="fileObj.fileType==='Image'?fileObj.fileData:'../assets/file.jpg'" height="150px" width="150px" class="border"></v-img>
+              <v-icon class="img-icon-delete-pos" @click="deleteFile">mdi-close-box</v-icon>
             </v-col>
           </v-row>
           <tags></tags>
@@ -21,8 +21,8 @@
         <v-divider></v-divider>
       </v-col>
     </v-row>
-    <detailBars @getImagePath="getImagePath"></detailBars>
-    <v-btn block rounded x-large color="primary" @click="submit">submit</v-btn>
+    <detailBars @getFileData="getFileData"></detailBars>
+    <v-btn block rounded x-large color="primary" @click="submit">post</v-btn>
   </v-container>
 </template>
 <style scoped>
@@ -71,7 +71,7 @@ export default {
       inputB: '',
       selectedLanguage: '',
       valid: false,
-      previewImage: ''
+      fileObj: null
     }
   },
   methods: {
@@ -84,11 +84,11 @@ export default {
     getSelection: function (e) {
       this.$data.selectedLanguage = e
     },
-    getImagePath: function (e) {
-      this.$data.previewImage = e
+    getFileData: function (fileObj) {
+      this.$data.fileObj = fileObj
     },
-    deleteImg: function () {
-      this.$data.previewImage = ''
+    deleteFile: function () {
+      this.$data.fileObj = null
     },
     submit: function () {
       const input = this.$data.input

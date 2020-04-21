@@ -14,9 +14,9 @@
         <v-select :items="sex" rounded solo @change="selectSex" :rules='sexRules'></v-select>
       </v-list>
       <v-list two-line class="text-left" width="100%" style="background:rgb(243,245,250)">
-        <v-list-item-title>Mother togue</v-list-item-title>
+        <v-list-item-title>Mother tongue</v-list-item-title>
       </v-list>
-      <settingItem class="mb-4" type="motherTogue" @selectMotherTogue="selectMotherTogue"></settingItem>
+      <settingItem class="mb-4" type="motherTogue" @selectmothertongue="selectmothertongue" ></settingItem>
       <v-list class="text-left" width="100%" style="background:rgb(243,245,250)">
         <v-list-item-title>Intersted Language</v-list-item-title>
         <v-list-item-subtitle class="mb-2">You can register at most 3 intersted languages</v-list-item-subtitle>
@@ -58,17 +58,20 @@ export default {
       selectedSex: '',
       motherLanguageNum: 1,
       inLanguageNum: 1,
-      motherTogue: '',
+      mothertongue: '',
       interstedLanguages: [],
       selectedLevels: []
     }
+  },
+  mounted () {
+    console.log(this.$route)
   },
   methods: {
     addInterstedLanguage: function () {
       this.$data.inLanguageNum += 1
     },
-    selectMotherTogue: function (lan) {
-      this.$data.motherTogue = lan
+    selectmothertongue: function (lan) {
+      this.$data.mothertongue = lan
     },
     selectInterstedLanguage: function (lanObj) {
       const id = lanObj.id
@@ -96,7 +99,7 @@ export default {
       else {
         const sex = this.$data.selectedSex
         const name = this.$data.name
-        const motherTogue = this.$data.motherTogue
+        const mothertongue = this.$data.mothertongue
         const levels = this.$data.selectedLevels
         if (!name) {
           alert('Name could not be empty!')
@@ -106,8 +109,8 @@ export default {
           alert('Sex could not be empty!')
           return
         }
-        if (!motherTogue) {
-          alert('motherTogue could not be empty!')
+        if (!mothertongue) {
+          alert('mothertongue could not be empty!')
           return
         }
         if (interstArr.length === 0) {
@@ -118,7 +121,7 @@ export default {
           alert('level could not be empty!')
           return
         }
-        console.log(sex, name, motherTogue, interstArr, levels)
+        console.log(sex, name, mothertongue, interstArr, levels)
       }
     },
     checkInLanguagesRepeat: function (inArr) {

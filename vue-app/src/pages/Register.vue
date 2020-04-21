@@ -164,6 +164,15 @@ export default {
     goBack: function () {
       this.$router.go(-1)
     },
+    fetchUserData: function (token) {
+      this.setToken(token)
+      this.http.get('/user/info').then(res => console.log(res)).catch(err => {
+        console.log(err)
+      })
+    },
+    setToken (token) {
+      this.$store.commit('updateToken', token)
+    },
     submitData: function () {
       this.$data.loginLoading = true
       const isLogin = this.$route.params.isLogin
@@ -184,7 +193,9 @@ export default {
         const isSuccess = res.data.success
         if (isSuccess && isLogin) {
           alert('Login Success!')
-          this.$router.push('/index/user/setting')
+          const token = res.data.data.token
+          this.fetchUserData(token)
+          this.$router.push('/index/user/setting', { from: 'login' })
         } else if (isSuccess && !isLogin) {
           alert('Register success!')
           this.$router.goBack()

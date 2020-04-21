@@ -74,7 +74,7 @@ export default {
       const params = {
         msgID
       }
-      this.$router.push({ name: 'messageDetail', params })
+      this.$router.push({ name: 'Question', params })
     }
   }
 }

@@ -35,7 +35,7 @@ const routes = [
         component: Home,
         children: [{
           path: 'messageDetail',
-          name: 'messageDetail',
+          name: 'Question',
           component: messageDetail
         }]
       },
@@ -67,7 +67,7 @@ const routes = [
         component: Post,
         children: [{
           path: 'postDetail',
-          name: 'postDetail',
+          name: 'New Question',
           component: postDetail
         }]
       },

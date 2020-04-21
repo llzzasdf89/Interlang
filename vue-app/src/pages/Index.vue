@@ -12,7 +12,7 @@
    <transition>
   <router-view></router-view>
 </transition>
-    <v-bottom-navigation app grow color="blue text--lighten-3" bottom v-model="bottomNav" v-if="$route.name!=='Chat'">
+    <v-bottom-navigation app grow color="blue text--lighten-3" bottom v-model="bottomNav" v-if="$route.name!=='Chat' && $route.name!=='Setting'">
       <v-btn to="/index/home" value='home'>
         <v-icon>mdi-home-outline</v-icon>
       </v-btn>
@@ -22,8 +22,16 @@
       <v-btn to="/index/post" value='post' >
         <v-icon>mdi-plus-circle-outline</v-icon>
       </v-btn>
-      <v-btn to="/index/notification" value='notification'>
-        <v-icon>mdi-bell-outline</v-icon>
+      <v-btn to="/index/notification" value='notification' @click='badgeShow = false'>
+        <v-badge
+        color="blue lighten-2"
+        overlap
+        bordered
+        :content='unreadNotificationNum'
+        :value='badgeShow'
+      >
+      <v-icon>mdi-bell-outline</v-icon>
+      </v-badge>
       </v-btn>
       <v-btn to="/index/user" value='user'>
         <v-icon>mdi-account</v-icon>
@@ -35,32 +43,50 @@
 export default {
   data: function () {
     return {
-      bottomNav: 'home'
+      bottomNav: undefined,
+      badgeShow: false,
+      unreadNotificationNum: 0
+    }
+  },
+  watch: {
+    $route: function (n, o) {
+      if (n.name !== 'Notification') {
+        const unread = this.$store.state.unreadNotificationNum
+        if (unread > 0) {
+          this.$data.badgeShow = true
+          this.unreadNotificationNum = unread
+        } else this.$data.badgeShow = false
+      }
     }
   },
   computed: {
     title: function () {
-      const name = this.$route.name || 'Home'
+      let name = this.$route.name || 'Home'
       if (name === 'Focus') {
         const title = this.$route.params.title
         return title
       }
+      if (name === 'User') name = 'Me'
+      if (name === 'Notification') name = 'Notifications'
+      if (name === 'Friends') name = 'Language Partners'
+      if (name === 'friendDetail') name = ''
       return name
     },
     iconShow: function () {
       const name = this.$route.name
-      const iconShowPath = ['postDetail', 'messageDetail', 'friendDetail', 'Setting', 'Chat', 'Focus']
+      const iconShowPath = ['New Question', 'Question', 'friendDetail', 'Chat', 'Focus']
       if (iconShowPath.includes(name)) return true
       return false
     }
   },
   methods: {
     goBack: function () {
-      if (this.$route.name === 'Chat') {
+      if (this.$route.name === 'Chat' || this.$route.params.from === 'Focus') {
         return this.$router.go(-2)
       }
       this.$router.back()
     }
   }
+
 }
 </script>

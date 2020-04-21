@@ -12,7 +12,7 @@
         <v-card-text>
           <div>
             <v-icon left small>mdi-message-text-outline</v-icon>
-            <span class="subtitle-2 d-inline-block mr-2">Mother Togue</span>
+            <span class="subtitle-2 d-inline-block mr-2">Mother Tongue</span>
             <span class="subtitle-2 font-weight-black pb-4">Chinese</span>
           </div>
           <div :class="type==='comment'?'hiddenInput':''">

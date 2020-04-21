@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     toPostDetail: function (params) {
-      this.$router.push({ name: 'postDetail', params })
+      this.$router.push({ name: 'New Question', params })
     }
   }
 }

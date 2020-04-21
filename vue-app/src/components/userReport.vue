@@ -1,10 +1,9 @@
 <template>
  <v-card outlined class="mt-6" width="100%">
-          <v-subheader>REPORTS</v-subheader>
           <v-list>
             <v-list-group>
               <template v-slot:activator>
-                <v-list-item-content>Mother Togue</v-list-item-content>
+                <v-list-item-content>Mother Tongue</v-list-item-content>
               </template>
               <v-list-item>
                 <v-list-item-content>
@@ -37,10 +36,10 @@ export default {
   data: function () {
     return {
       items: [{ icon: 'mdi-thumb-up', text: '被点赞的次数', value: 20 }, { icon: 'mdi-crown', text: '被选为最佳答案的次数', value: 5 }, { icon: 'mdi-bookmark', text: '书签', value: 30 }],
-      motherLanguage: { language: 'Chinese', value: 5 },
+      motherLanguage: { language: 'Chinese', value: 'native' },
       interstingLanguageItems: [
-        { language: 'English', value: 2 },
-        { language: 'Germany', value: 3 }
+        { language: 'English', value: 'beginner' },
+        { language: 'Germany', value: 'advanced' }
       ],
       familarCountries: ['America', 'Canada', 'Swiss'],
       interstingCountries: ['America', 'China']

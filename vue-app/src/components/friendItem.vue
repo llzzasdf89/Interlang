@@ -10,7 +10,7 @@
           <v-list-item-content>
             <v-list-item-title >Richard</v-list-item-title>
             <span class="subtitle-2 text--secondary">Chinese:native>German:beginner</span>
-            <v-list-item-subtitle >China</v-list-item-subtitle>
+            <v-list-item-subtitle >♂</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
         <v-divider inset></v-divider>

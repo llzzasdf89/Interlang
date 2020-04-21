@@ -35,15 +35,15 @@ export default {
   data: function () {
     return {
       isFocus: false,
-      focusText: 'focus'
+      focusText: 'follow'
     }
   },
   methods: {
     focus: function () {
       const isFocus = this.$data.isFocus
       this.$data.isFocus = !isFocus
-      if (isFocus) this.$data.focusText = 'focus'
-      else this.$data.focusText = 'focused'
+      if (isFocus) this.$data.focusText = 'follow'
+      else this.$data.focusText = 'followed'
     },
     toChat: function () {
       this.$router.push({ name: 'Chat' })

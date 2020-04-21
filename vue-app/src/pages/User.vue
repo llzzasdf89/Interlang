@@ -13,7 +13,7 @@
           </v-col>
           <v-col cols="10" class="text-start">
             <v-list two-line>
-              <v-list-item-title class="font-weight-bold">RichardZhiLi</v-list-item-title>
+              <v-list-item-title class="font-weight-bold">{{name}}</v-list-item-title>
               <v-list-item-subtitle class="font-weight-medium">♂</v-list-item-subtitle>
             </v-list>
           </v-col>
@@ -68,6 +68,11 @@ import userReport from '@/components/userReport'
 export default {
   components: {
     userReport
+  },
+  computed: {
+    name: function () {
+      return this.$store.state.user.Name
+    }
   },
   data: function () {
     return {

@@ -1,7 +1,7 @@
 <template>
 <v-content style="background:rgb(243,245,250)">
 <v-container app class='fill-height d-flex flex-column '>
-<notificationMessage v-for='i in notifications' :key='i.ID' :title='i.Title' :fromUser='i.From.Name' :Avatar='i.From.Avatar' :fromID='i.Link' :createAt ='i.CreateAt' :typeID='i.From.id' @click.native='readMessage(i.ID)'>
+<notificationMessage v-for='i in notifications' :key='i.ID' :title='i.Title' :fromUser='i.From.Name' :Avatar='i.From.Avatar' :fromID='i.Link' :createdAt ='i.CreateAt' :typeID='i.From.id' @click.native='readMessage(i.ID)'>
 </notificationMessage>
 </v-container>
 </v-content>
@@ -44,10 +44,10 @@ export default {
   mounted () {
     const readedNotificationsID = JSON.parse(localStorage.getItem('readedNotificationID'))
     // 这里需要加入与 后端对接的逻辑，获取该用户的所有Notification，并与已经缓存过的做对比，计算出未读信息数量
-    // setInterval(() => {
-    //   this.fetchNotifications()
-    // }, 180000)// 每隔三分钟请求一次新的Notificaiton
-    this.$store.commit('updateUnread', 3)
+    const NotificationTimer = setInterval(() => {
+      this.fetchNotifications()
+    }, 180000)// 每隔三分钟请求一次新的Notificaiton
+    this.$store.commit('updateTimer', NotificationTimer)
     this.$data.readedNotificationsID = readedNotificationsID
   },
   methods: {

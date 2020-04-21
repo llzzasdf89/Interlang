@@ -166,7 +166,11 @@ export default {
     },
     fetchUserData: function (token) {
       this.setToken(token)
-      this.http.get('/user/info').then(res => console.log(res)).catch(err => {
+      this.http.get('/user/info').then(res => {
+        if (res.success) {
+          this.$store.commit('updateUser', res.data)
+        }
+      }).catch(err => {
         console.log(err)
       })
     },

@@ -1,23 +1,22 @@
 <template>
-    <v-content>
+    <v-content class='d-flex flex-column'>
       <transition>
   <router-view></router-view>
 </transition>
       <v-container v-if="!$route.params.msgID" style="background:rgb(243,245,250)">
         <v-card elevation="0">
-          <v-tabs v-model="tab" background-color="light-blue" center-active dark grow>
-            <v-tab v-for="item in items" :key="item.content">{{item.tab}}</v-tab>
+          <v-tabs v-model="tab" background-color="light-blue" center-active dark grow @change='changeTab'>
+            <v-tab v-for="item in tabs" :key="item">{{item}}</v-tab>
           </v-tabs>
-          <v-tabs-items v-model="tab" v-for="item in items" :key="item.id" continuous>
-            <v-tab-item @click='toMsgDetail(item.id)'>
+          <div  v-for="item in tabItems" :key="item.ID">
               <v-card class="mx-auto cardBorder" max-width="400" elevation="0" >
                 <v-card-title>
                   <v-icon left small>mdi-message-text-outline</v-icon>
                   <span class="subtitle-1 d-inline-block mr-2">Mother tongue</span>
-                  <span class="title font-weight-black">中文</span>
+                  <span class="title font-weight-black">{{item.User.FirstLanguage}}</span>
                 </v-card-title>
 
-                <v-card-text class="headline font-weight-bold">{{item.content}}</v-card-text>
+                <v-card-text @click='toMsgDetail(item.ID)' class="headline font-weight-bold">{{item.Content}}</v-card-text>
 
                 <v-card-actions>
                   <v-list-item class="grow">
@@ -31,17 +30,12 @@
 
                     <v-row align="center" justify="end">
                       <v-icon class="mr-1">mdi-comment</v-icon>
-                      <span class="subheading mr-2">256</span>
-                    </v-row>
-                    <v-row align="center" justify="end">
-                      <v-icon class="mr-1">mdi-thumb-up</v-icon>
-                      <span class="subheading mr-2">256</span>
+                      <span class="subheading mr-2">{{item.AnswerCount}}</span>
                     </v-row>
                   </v-list-item>
                 </v-card-actions>
               </v-card>
-            </v-tab-item>
-          </v-tabs-items>
+            </div>
         </v-card>
       </v-container>
     </v-content>
@@ -54,27 +48,49 @@
 </style>
 <script>
 export default {
+  mounted () {
+    this.http.get('/questions/').then(res => {
+      if (res.success) {
+        const questions = res.data
+        const tabs = [...new Set(questions.map((v) => v.Language))]
+        this.$data.tabs = tabs
+        this.$data.questions = questions
+        this.changeTab(0)
+      }
+    }).catch(err => {
+      console.log(err)
+    })
+  },
   data: function () {
     return {
       tab: null,
-      items: [
-        { tab: 'German', content: 'Tab 1 Content', id: 1 },
-        { tab: 'French', content: 'Tab 2 Content', id: 2 },
-        { tab: 'Japanese', content: 'Tab 3 Content', id: 3 },
-        { tab: 'Korean', content: 'Tab 4 Content', id: 4 },
-        { tab: 'Italian', content: 'Tab 6 Content', id: 5 },
-        { tab: 'Russian', content: 'Tab 7 Content', id: 6 },
-        { tab: 'Spanish', content: 'Tab 8 Content', id: 7 },
-        { tab: 'Portuguese', content: 'Tab 9 Content', id: 8 }
-      ]
+      questions: [],
+      tabs: [],
+      tabItems: []
     }
   },
   methods: {
     toMsgDetail: function (msgID) {
+      const messageObj = this.findMatchedMsg(msgID)
       const params = {
-        msgID
+        msgID,
+        messageObj
       }
       this.$router.push({ name: 'Question', params })
+    },
+    findMatchedMsg: function (msgID) {
+      const tabItems = this.$data.tabItems
+      for (let i = 0; i < this.$data.tabItems.length; i++) {
+        if (tabItems[i].ID === msgID) return tabItems[i]
+      }
+      return undefined
+    },
+    changeTab: function (tabIdx) {
+      let questions = this.$data.questions
+      const tab = this.$data.tabs[tabIdx]
+      questions = questions.filter(v => v.Language === tab)
+      this.$data.tabItems = questions
+      // this.$data.tabItems.splice(0, tabItems.length, ...questions)
     }
   }
 }

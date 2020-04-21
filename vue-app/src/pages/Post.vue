@@ -33,7 +33,7 @@ export default {
         {
           color: 'blue lighten-1',
           title: 'What\'s the difference?',
-          artist: 'Please show me the difference between "..." and "..."',
+          artist: 'Please show me the difference between A and B',
           params: {
             type: 'B',
             endSentence: `What's the difference？

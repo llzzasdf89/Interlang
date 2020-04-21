@@ -1,7 +1,8 @@
 <template>
 
-<v-container app fluid style="background:rgb(243,245,250)" class='fill-height d-flex flex-column'>
-<Message > </Message>
+<v-container app fluid style="background:rgb(243,245,250)" class='fill-height'>
+<Message :content="$route.params.messageObj.Content" :user="$route.params.messageObj.User" :language="$route.params.messageObj.Language"  :createdAt='$route.params.messageObj.CreateAt'> </Message>
+<Message v-for='item in comments' :key='item.ID' type='comment'  :content='item.Content' :user="item.User" :createdAt='item.Date'> </Message>
 <v-alert type='success' transition="scale-transition" :value='showAlert'>
 reply success
 </v-alert>
@@ -17,9 +18,21 @@ export default {
     MessageBar,
     Message
   },
+  mounted () {
+    if (this.$route.params.messageObj.AnswerCount <= 0) return
+    this.http.get(`/questions/answers?questionID=${this.$route.params.msgID}`).then(res => {
+      if (res.success) {
+        console.log(res.data)
+        this.$data.comments = res.data
+      }
+    }).catch(err => {
+      console.log(err)
+    })
+  },
   data: function () {
     return {
-      showAlert: false
+      showAlert: false,
+      comments: []
     }
   },
   computed: {

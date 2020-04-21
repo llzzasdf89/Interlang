@@ -8,7 +8,7 @@
         <v-text-field solo rounded v-model="name" :rules='nameRules'></v-text-field>
       </v-list>
       <v-list class="text-left" width="100%" style="background:rgb(243,245,250)">
-        <v-list-item-title >Set your sex</v-list-item-title>
+        <v-list-item-title >Set your gender</v-list-item-title>
       </v-list>
       <v-list width="100%" style="background:rgb(243,245,250)">
         <v-select :items="sex" rounded solo @change="selectSex" :rules='sexRules'></v-select>
@@ -16,9 +16,9 @@
       <v-list two-line class="text-left" width="100%" style="background:rgb(243,245,250)">
         <v-list-item-title>Mother tongue</v-list-item-title>
       </v-list>
-      <settingItem class="mb-4" type="motherTogue" @selectmothertongue="selectmothertongue" ></settingItem>
+      <settingItem class="mb-4" type="motherTogue" @selectmMotherTongue="selectmothertongue" ></settingItem>
       <v-list class="text-left" width="100%" style="background:rgb(243,245,250)">
-        <v-list-item-title>Intersted Language</v-list-item-title>
+        <v-list-item-title>Intersted Language(s)</v-list-item-title>
         <v-list-item-subtitle class="mb-2">You can register at most 3 intersted languages</v-list-item-subtitle>
       </v-list>
       <settingItem
@@ -63,9 +63,6 @@ export default {
       selectedLevels: []
     }
   },
-  mounted () {
-    console.log(this.$route)
-  },
   methods: {
     addInterstedLanguage: function () {
       this.$data.inLanguageNum += 1
@@ -87,6 +84,9 @@ export default {
       this.$data.selectedSex = sex
     },
     logOut: function () {
+      this.$store.commit('updateToken', null)
+      this.$store.commit('updateUser', null)
+      this.$store.commit('updateUnread', 0)
       setTimeout(() => {
         alert('you have successfully logged out!')
       }, 100)
@@ -110,7 +110,7 @@ export default {
           return
         }
         if (!mothertongue) {
-          alert('mothertongue could not be empty!')
+          alert('mother tongue could not be empty!')
           return
         }
         if (interstArr.length === 0) {
@@ -121,7 +121,7 @@ export default {
           alert('level could not be empty!')
           return
         }
-        console.log(sex, name, mothertongue, interstArr, levels)
+        this.$router.push('/index/user')
       }
     },
     checkInLanguagesRepeat: function (inArr) {

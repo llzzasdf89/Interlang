@@ -7,8 +7,8 @@ export default new Vuex.Store({
   state: {
     token: null,
     unreadNotificationNum: 0,
+    notificationTimer: null,
     user: {
-      username: null,
       name: null,
       sex: null,
       avatar: null,
@@ -28,6 +28,12 @@ export default new Vuex.Store({
     },
     updateUnread (state, unreadNum) {
       state.unreadNotificationNum = unreadNum
+    },
+    updateTimer (state, timer) {
+      state.notificationTimer = timer
+    },
+    updateUser (state, user) {
+      state.user = user
     },
     clickOnDom () {
       const Dom = this.state.Dom

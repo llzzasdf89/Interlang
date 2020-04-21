@@ -30,7 +30,7 @@ export default {
   methods: {
     selectLanguage: function (lan) {
       const type = this.type
-      if (type === 'motherTogue') this.$emit('selectMotherTogue', lan)
+      if (type === 'motherTogue') this.$emit('selectmMotherTongue', lan)
       else {
         const lanObj = {
           id: this.id,

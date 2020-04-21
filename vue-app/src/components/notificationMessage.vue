@@ -44,17 +44,10 @@
 }
 </style>
 <script>
+import { dateFilter } from '@/common/dateFilter'
 export default {
-  props: ['title', 'fromUser', 'Avatar', 'fromID', 'createAt', 'typeID'],
-  computed: {
-    date: (e) => {
-      const dt = new Date(e.createAt * 1000)
-      const month = dt.getMonth() + 1
-      const day = dt.getDate()
-      const date = `${month}.${day}`
-      return date
-    }
-  },
+  mixins: [dateFilter],
+  props: ['title', 'fromUser', 'Avatar', 'fromID', 'createdAt', 'typeID'],
   methods: {
     toUserDetail (userID) {
       this.$router.push({ name: 'friendDetail', params: { userID } })

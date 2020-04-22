@@ -1,8 +1,14 @@
 <template>
+
     <v-content class='d-flex flex-column'>
       <transition>
   <router-view></router-view>
 </transition>
+<scroller v-if="$route.name === Home"
+          ref="my_scroller"
+          :on-infinite="infinite"
+          noDataText="no more questions"
+          >
       <v-container v-if="!$route.params.msgID" style="background:rgb(243,245,250)">
         <v-card elevation="0">
           <v-tabs v-model="tab" background-color="light-blue" center-active dark grow @change='changeTab'>
@@ -38,6 +44,7 @@
             </div>
         </v-card>
       </v-container>
+      </scroller>
     </v-content>
 </template>
 <style scoped>
@@ -47,29 +54,44 @@
 }
 </style>
 <script>
+
 export default {
   mounted () {
-    this.http.get('/questions/').then(res => {
-      if (res.success) {
-        const questions = res.data
-        const tabs = [...new Set(questions.map((v) => v.Language))]
-        this.$data.tabs = tabs
-        this.$data.questions = questions
-        this.changeTab(0)
-      }
-    }).catch(err => {
-      console.log(err)
-    })
+    this.fetchQuestions(this.$data.page++)
   },
   data: function () {
     return {
       tab: null,
       questions: [],
       tabs: [],
-      tabItems: []
+      tabItems: [],
+      page: 0
     }
   },
   methods: {
+    infinite: function (e) {
+      this.fetchQuestions(this.$data.page++, true)
+    },
+    scroll: function (e) {
+      console.log(e)
+    },
+    fetchQuestions: function (page = 0, loadmore = false) {
+      this.http.get(`/questions/?page=${page}`).then(res => {
+        if (res.success) {
+          const questions = res.data
+          if (loadmore) {
+            this.$refs.my_scroller.finishInfinite(true)
+            return
+          }
+          const tabs = [...new Set(questions.map((v) => v.Language))]
+          this.$data.tabs = [...new Set(this.$data.tabs.concat(tabs))]
+          this.$data.questions = this.$data.questions.concat(questions)
+          this.changeTab(0)
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    },
     toMsgDetail: function (msgID) {
       const messageObj = this.findMatchedMsg(msgID)
       const params = {

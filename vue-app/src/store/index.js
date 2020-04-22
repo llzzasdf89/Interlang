@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     token: null,
     unreadNotificationNum: 0,
+    readedNotificationsID: [],
     notificationTimer: null,
     user: {
       name: null,
@@ -31,6 +32,9 @@ export default new Vuex.Store({
     },
     updateTimer (state, timer) {
       state.notificationTimer = timer
+    },
+    updateReaded (state, msgID) {
+      state.readedNotificationsID.push(msgID)
     },
     updateUser (state, user) {
       state.user = user

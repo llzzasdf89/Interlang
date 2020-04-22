@@ -168,6 +168,7 @@ export default {
       this.setToken(token)
       this.http.get('/user/info').then(res => {
         if (res.success) {
+          console.log(res.data)
           this.$store.commit('updateUser', res.data)
         }
       }).catch(err => {

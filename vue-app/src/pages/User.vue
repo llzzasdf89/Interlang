@@ -8,12 +8,12 @@
         <v-card class="d-flex align-center mt-6" outlined>
           <v-col cols="2">
             <v-avatar left>
-              <v-img src="@/assets/IMG_3154.jpeg"></v-img>
+              <v-img :src="user.Avatar"></v-img>
             </v-avatar>
           </v-col>
           <v-col cols="10" class="text-start">
             <v-list two-line>
-              <v-list-item-title class="font-weight-bold">{{name}}</v-list-item-title>
+              <v-list-item-title class="font-weight-bold">{{user.Name}}</v-list-item-title>
               <v-list-item-subtitle class="font-weight-medium">♂</v-list-item-subtitle>
             </v-list>
           </v-col>
@@ -47,15 +47,15 @@
             <v-col cols="12" class="d-flex justify-space-around">
               <v-list-item>
                 <v-list-item-subtitle class="d-flex justify-space-between align-baseline">
-                  <v-icon class="ml-1">{{n.icon}}</v-icon>
-                  <span>{{n.text}}</span>
-                  <span>{{n.value}}</span>
+                  <v-icon class="ml-1">mdi-thumb-up</v-icon>
+                  <span>Number of like you got</span>
+                  <span>{{user.Likes}}</span>
                 </v-list-item-subtitle>
               </v-list-item>
             </v-col>
           </v-row>
         </v-card>
-        <userReport></userReport>
+        <userReport :user='user'></userReport>
         <v-footer app>
           <v-col cols='12'> <v-btn block rounded x-large color="primary" @click="toSetting">Settings</v-btn></v-col>
         </v-footer>
@@ -66,12 +66,19 @@
 <script>
 import userReport from '@/components/userReport'
 export default {
+  mounted () {
+    this.http.get('/user/focus').then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+  },
   components: {
     userReport
   },
   computed: {
-    name: function () {
-      return this.$store.state.user.Name
+    user: function () {
+      return this.$store.state.user
     }
   },
   data: function () {

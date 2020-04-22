@@ -1,8 +1,8 @@
 <template>
 
 <v-container app fluid style="background:rgb(243,245,250)" class='fill-height'>
-<Message :content="$route.params.messageObj.Content" :user="$route.params.messageObj.User" :language="$route.params.messageObj.Language"  :createdAt='$route.params.messageObj.CreateAt'> </Message>
-<Message v-for='item in comments' :key='item.ID' type='comment'  :content='item.Content' :user="item.User" :createdAt='item.Date'> </Message>
+<Message :messageObj ='$route.params.messageObj'> </Message>
+<Message v-for='item in comments' :key='item.ID' type='comment'  :messageObj="item"> </Message>
 <v-alert type='success' transition="scale-transition" :value='showAlert'>
 reply success
 </v-alert>

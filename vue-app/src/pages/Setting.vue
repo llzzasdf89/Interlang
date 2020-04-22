@@ -13,6 +13,12 @@
       <v-list width="100%" style="background:rgb(243,245,250)">
         <v-select :items="sex" rounded solo @change="selectSex" :rules='sexRules'></v-select>
       </v-list>
+      <v-list class="text-left" width="100%" style="background:rgb(243,245,250)">
+        <v-list-item-title >Set your avartar</v-list-item-title>
+      </v-list>
+      <v-list width="100%" style="background:rgb(243,245,250)">
+        <v-file-input solo rounded @change='submitAvatar' accept='.jpeg, .png, .jpg'></v-file-input>
+      </v-list>
       <v-list two-line class="text-left" width="100%" style="background:rgb(243,245,250)">
         <v-list-item-title>Mother tongue</v-list-item-title>
       </v-list>
@@ -51,14 +57,15 @@ export default {
   },
   data: function () {
     return {
-      name: '',
+      name: '' || this.$store.state.user.Name,
       nameRules: [v => !!v || 'The name can not be empty'],
       sex: ['male', 'female'],
       sexRules: [v => !!v || 'The sex can not be empty'],
       selectedSex: '',
       motherLanguageNum: 1,
       inLanguageNum: 1,
-      mothertongue: '',
+      Avartar: '',
+      mothertongue: '' || this.$store.state.user.FirstLanguage,
       interstedLanguages: [],
       selectedLevels: []
     }
@@ -91,6 +98,15 @@ export default {
         alert('you have successfully logged out!')
       }, 100)
       this.$router.push('/begin')
+    },
+    submitAvatar: function (e) {
+      if (e) {
+        const reader = new FileReader()
+        reader.readAsDataURL(e)
+        reader.onload = () => {
+          this.$data.Avartar = reader.result
+        }
+      }
     },
     submit: function () {
       const interstArr = this.$data.interstedLanguages

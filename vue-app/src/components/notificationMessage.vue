@@ -1,6 +1,6 @@
 <template>
   <div style="width:100%">
-    <v-row v-if='typeID === 1' class='noti-border '>
+    <v-row v-if='messageObj.From.ID === 1' class='noti-border '>
       <v-col cols="2" >
         <v-list style="background:rgb(243,245,250)">
           <v-list-item >
@@ -10,23 +10,23 @@
           </v-list-item>
         </v-list>
       </v-col>
-      <v-col cols="10" class="d-flex text-left" @click='toMessageDetail(fromID)' v-ripple>
+      <v-col cols="10" class="d-flex text-left" @click='toMessageDetail(messageObj.ID)' v-ripple>
         <v-list style="background:rgb(243,245,250)" >
           <v-list-item-title >
-            <span class="font-weight-bold">{{fromUser}}</span>&nbsp;{{title}}
+            <span class="font-weight-bold">{{messageObj.From.Name}}</span>&nbsp;{{messageObj.Title}}
           </v-list-item-title>
           <v-list-item-action-text>{{date}}</v-list-item-action-text>
         </v-list>
       </v-col>
       <v-divider></v-divider>
     </v-row>
-    <v-row v-if='typeID === 0' v-ripple class='noti-border'>
+    <v-row v-if='messageObj.From.ID === 0' v-ripple class='noti-border'>
     <v-col cols='12'>
       <v-list two-line style="background:rgb(243,245,250)" >
         <v-list-item-title>
             System Notification
           </v-list-item-title >
-          <v-list-item-title class='text-center'>{{title}}</v-list-item-title>
+          <v-list-item-title class='text-center'>{{messageObj.title}}</v-list-item-title>
       </v-list>
     </v-col>
     </v-row>
@@ -47,13 +47,26 @@
 import { dateFilter } from '@/common/dateFilter'
 export default {
   mixins: [dateFilter],
-  props: ['title', 'fromUser', 'Avatar', 'fromID', 'createdAt', 'typeID'],
+  props: ['messageObj'],
   methods: {
     toUserDetail (userID) {
       this.$router.push({ name: 'friendDetail', params: { userID } })
     },
     toMessageDetail (msgID) {
-      this.$router.push({ name: 'Question', params: { msgID } })
+      this.http.get(`question/${msgID}`).then(res => {
+        if (res.success) {
+          const messageObj = res.data
+          this.$router.push({
+            name: 'Question',
+            params: {
+              msgID,
+              messageObj
+            }
+          })
+        }
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }

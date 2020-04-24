@@ -17,12 +17,12 @@
           </div>
           <div :class="type==='comment'?'hiddenInput':''">
             <v-icon left small>mdi-pen</v-icon>
-            <span class="subtitle-2 font-weight-black">Chinese advanced</span>
+            <span class="subtitle-2 font-weight-black">{{messageObj.User.Intersts}}</span>
           </div>
           <p :class="type==='comment'?'hiddenInput':''">Question about {{messageObj.Language}}</p>
           <div
             class="text--primary"
-            style='white-space:pre'
+            style='white-space:pre-wrap'
           >{{messageObj.Content}}</div>
           <div class="text-center">
           </div>

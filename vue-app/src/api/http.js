@@ -23,6 +23,12 @@ export default {
   fetchFans: function () {
     return this.get('/user/fans')
   },
+  fetchFriends () {
+    return this.get('/user/partner')
+  },
+  etchUserInfo () {
+    return this.get('/user/info')
+  },
   getUserInLans () {
     this.get('/user/interestedLanguage').then(res => {
       console.log(res)

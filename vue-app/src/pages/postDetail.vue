@@ -17,7 +17,7 @@
               <v-icon class="img-icon-delete-pos" @click="deleteFile">mdi-close-box</v-icon>
             </v-col>
           </v-row>
-          <tags :tags='tags'></tags>
+          <tags :tags='tags' @selectTags= 'selectTags'></tags>
         </v-form>
         <v-divider></v-divider>
       </v-col>
@@ -74,6 +74,7 @@ export default {
       alt: '../assets/file.jpg',
       input: '',
       inputB: '',
+      selectedTags: [],
       selectedLanguage: '',
       valid: false,
       fileObj: null
@@ -95,22 +96,36 @@ export default {
     deleteFile: function () {
       this.$data.fileObj = null
     },
+    selectTags (e) {
+      this.$data.selectedTags = e
+    },
+    findMatchedLanguageID (selectedLanguage) {
+      const allLanguages = this.$store.state.languages
+      const matchID = allLanguages.map(v => {
+        if (v.Name === selectedLanguage) return v.ID
+      })[0] || -1
+      return matchID
+    },
     submit: function () {
       const input = this.$data.input
       const inputB = this.$data.inputB || ''
       const selectedLanguage = this.$data.selectedLanguage
-      // const tags = this.$data.selectedTags
+      const selectedLanguageID = this.findMatchedLanguageID(selectedLanguage)
+      if (selectedLanguageID < 0) return alert('choose language error!')
+      const tags = this.findMatchedTagsID(this.$data.selectedTags)
+      console.log(tags)
       const type = this.$route.params.type
       const hint = this.$children[3].$route.params.hint
       const endSentence = this.$children[3].$route.params.endSentence
       const content = this.embedContent(type, input, inputB, selectedLanguage, hint, endSentence)
       const params = {
         content,
-        languageID: 1,
-        tags: [1, 2]
+        languageID: selectedLanguageID,
+        tags
       }
       this.http.post('/question/add', params).then(res => {
-        if (res.success) alert('Post question Success!')
+        if (res.data.success) alert('Post question Success!')
+        this.$router.push({ name: 'Home' })
       }).catch(err => {
         alert(err)
       })

@@ -9,7 +9,9 @@ export const detailTemplateCommonData = {
   },
   computed: {
     languages: function () {
-      return this.$store.state.languages
+      let languages = this.$store.state.languages
+      languages = languages.map(v => v.Name)
+      return languages
     },
     hint: function () {
       return this.$route.params.hint

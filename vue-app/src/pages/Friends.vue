@@ -14,6 +14,10 @@
 <script>
 import friendItem from '@/components/friendItem'
 export default {
+  async mounted () {
+    const friends = await this.http.fetchFriends()
+    console.log(friends)
+  },
   components: {
     friendItem
   },

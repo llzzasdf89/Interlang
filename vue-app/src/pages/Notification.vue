@@ -27,7 +27,6 @@ export default {
   },
   mounted () {
     this.fetchNotifications()
-    // 这里需要加入与 后端对接的逻辑，获取该用户的所有Notification，并与已经缓存过的做对比，计算出未读信息数量
     if (this.$store.state.notificationTimer === null) {
       const NotificationTimer = setInterval(() => {
         this.fetchNotifications()

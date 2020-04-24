@@ -88,20 +88,20 @@ export default {
     },
     toFocus: async function (title) {
       if (title === 'Focus') {
-        const users = await this.http.fetchFocus()
+        const data = await this.http.fetchFocus()
         const params = {
           title: 'You followed',
-          users
+          users: data.data
         }
         this.$router.push({
           name: 'Focus',
           params
         })
       } else {
-        const users = await this.http.fetchFans()
+        const data = await this.http.fetchFans()
         const params = {
           title: 'Your follower',
-          users
+          users: data.data
         }
         this.$router.push({
           name: 'Focus',

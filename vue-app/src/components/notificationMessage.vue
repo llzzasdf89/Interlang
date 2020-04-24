@@ -10,7 +10,7 @@
           </v-list-item>
         </v-list>
       </v-col>
-      <v-col cols="10" class="d-flex text-left" @click='toMessageDetail(messageObj.ID)' v-ripple>
+      <v-col cols="10" class="d-flex text-left" @click='toMessageDetail(messageObj.Link)' v-ripple>
         <v-list style="background:rgb(243,245,250)" >
           <v-list-item-title >
             <span class="font-weight-bold">{{messageObj.From.Name}}</span>&nbsp;{{messageObj.Title}}

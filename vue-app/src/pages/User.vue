@@ -8,7 +8,7 @@
         <v-card class="d-flex align-center mt-6" outlined>
           <v-col cols="2">
             <v-avatar left>
-              <v-img :src="user.Avatar || ''"></v-img>
+              <v-img :lazy-src="user.Avatar" transition='fade-transition'></v-img>
             </v-avatar>
           </v-col>
           <v-col cols="10" class="text-start">
@@ -55,12 +55,12 @@
             </v-col>
           </v-row>
         </v-card>
-        <tags :isDisabled=true :tags='user.Interests'></tags>
+        <tags :isDisabled=true :tags='user.Tags'></tags>
         <userReport :user='user'></userReport>
-        <v-footer app>
+      </v-container>
+      <v-footer app>
           <v-col cols='12'> <v-btn block rounded x-large color="primary" @click="toSetting">Settings</v-btn></v-col>
         </v-footer>
-      </v-container>
     </v-content>
   </v-app>
 </template>
@@ -72,14 +72,19 @@ export default {
     userReport,
     tags
   },
-  computed: {
-    user: function () {
-      return this.$store.state.user
-    }
+  mounted () {
+    this.http.get('/user/info').then(res => {
+      console.log(res.data.Avatar)
+      this.$data.user = res.data
+      this.$store.commit('updateUser', res.data)
+    }).catch(err => {
+      alert('get user information error' + err)
+    })
   },
   data: function () {
     return {
-      items: [{ icon: 'mdi-thumb-up', text: 'Number of like you got', value: 20 }]
+      items: [{ icon: 'mdi-thumb-up', text: 'Number of like you got', value: 20 }],
+      user: null
     }
   },
   methods: {

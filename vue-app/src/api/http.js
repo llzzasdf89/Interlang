@@ -5,8 +5,9 @@ axios.defaults.timeout = 30000
 axios.defaults.baseURL = 'http://101.132.114.219:8888'
 axios.interceptors.request.use(
   config => {
-    const token = store.state.token || localStorage.getItem('token')
-    if (config.url !== '/user/login') {
+    const token = localStorage.getItem('token')
+    const urlWithNoToken = ['/user/login', '/user/register']
+    if (!urlWithNoToken.includes(config.url) && token) {
       config.headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
         Authorization: token
@@ -26,14 +27,11 @@ export default {
   fetchFriends () {
     return this.get('/user/partner')
   },
-  etchUserInfo () {
+  fetchUserInfo () {
     return this.get('/user/info')
   },
   getUserInLans () {
     this.get('/user/interestedLanguage').then(res => {
-      console.log(res)
-    }).catch(err => {
-      console.log(err)
     })
   },
   fetchFocus: function () {
@@ -43,9 +41,9 @@ export default {
     this.get('tags/list').then(res => {
       if (res.success) {
         store.commit('updateTags', res.data)
-      } else console.log(res)
+      } else return res
     }).catch(err => {
-      console.log(err)
+      return err
     })
   },
   fetchLanguages: function () {
@@ -55,7 +53,7 @@ export default {
         store.commit('updateLanguage', languages)
       }
     }).catch(err => {
-      console.log(err)
+      return err
     })
   },
   get (url, params = {}) {

@@ -1,11 +1,11 @@
 <template>
 <v-content style="background:rgb(243,245,250)">
   <scroller
-          ref="my_scroller"
+          ref="notificationScroller"
           :on-refresh="refresh"
           refreshText= 'pull to refresh'
           >
-<v-container app class='fill-height d-flex flex-column '>
+<v-container class='fill-height d-flex flex-column '>
 <notificationMessage v-for='i in notifications' :key='i.ID' :messageObj='i' @click.native='readMessage(i.ID)'>
 </notificationMessage>
 </v-container>
@@ -36,9 +36,9 @@ export default {
   },
   methods: {
     refresh: function (e) {
+      this.fetchNotifications(this.$data.page++)
       setTimeout(() => {
-        this.fetchNotifications(this.page++)
-        this.$refs.my_scroller.finishPullToRefresh()
+        this.$refs.notificationScroller.finishPullToRefresh()
       }, 1000)
     },
     readMessage: function (msgid) {

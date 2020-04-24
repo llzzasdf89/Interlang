@@ -41,6 +41,16 @@
 </template>
 <script>
 export default {
+  mounted () {
+    const token = this.$store.state.token || localStorage.getItem('token')
+    if (token) {
+      this.$store.commit('updateToken', token)
+      this.autoLogin()
+    } else {
+      alert('Please log in first')
+      this.$router.push({ name: 'Begin' })
+    }
+  },
   data: function () {
     return {
       bottomNav: undefined,
@@ -85,6 +95,29 @@ export default {
         return this.$router.go(-2)
       }
       this.$router.back()
+    },
+    autoLogin () {
+      this.http.get('/user/newcomer').then(res => {
+        if (res.success) {
+          this.$router.push('/index/user/setting')
+        } else {
+          this.http.get('/user/info').then(res => {
+            if (res.success) {
+              this.$store.commit('updateUser', res.data)
+              this.http.fetchTags()
+              this.http.fetchLanguages()
+              this.http.getUserInLans()
+            } else {
+              alert('get User info error, please try again later')
+            }
+          }).catch(err => {
+            return err
+          })
+          if (this.$route.name !== 'Home') this.$router.push({ name: 'Home' })
+        }
+      }).catch(err => {
+        return err
+      })
     }
   }
 

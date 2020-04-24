@@ -1,11 +1,11 @@
 <template>
   <div style="width:100%">
-    <v-row v-if='messageObj.From.ID === 1' class='noti-border '>
+    <v-row  class='noti-border '>
       <v-col cols="2" >
         <v-list style="background:rgb(243,245,250)">
           <v-list-item >
             <v-list-item-avatar class="message-avatar" size='50' >
-              <v-img @click.native='toUserDetail(1)'></v-img>
+              <v-img @click.native='toUserDetail(messageObj.From.ID)' :src='messageObj.From.Avatar'></v-img>
             </v-list-item-avatar>
           </v-list-item>
         </v-list>
@@ -26,7 +26,7 @@
         <v-list-item-title>
             System Notification
           </v-list-item-title >
-          <v-list-item-title class='text-center'>{{messageObj.title}}</v-list-item-title>
+          <v-list-item-title class='text-center'>{{messageObj.Title}}</v-list-item-title>
       </v-list>
     </v-col>
     </v-row>

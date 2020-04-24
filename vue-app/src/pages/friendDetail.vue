@@ -3,20 +3,20 @@
     <transition>
   <router-view></router-view>
 </transition>
-    <v-container app class="fill-height d-flex align-content-start fluid align-center " v-if="$route.name!='Chat'" style="background:rgb(243,245,250)">
+    <v-container app class="fill-height d-flex align-content-start fluid align-center overflow-hidden" style="background:rgb(243,245,250)">
       <friendItem :user='$route.params.user'></friendItem>
-      <tags :isDisabled="true" :textColor="'white'" :tags='$route.params.user.Interests'></tags>
+      <tags :isDisabled="true" :textColor="'white'" :tags='$route.params.user.Tags'></tags>
       <userReport class='mx-5' :user='$route.params.user'></userReport>
       <v-footer app>
         <v-row dense>
           <v-col cols="6" class="d-flex flex-column align-center">
-            <v-btn icon @click='toChat'>
+            <v-btn icon>
               <v-icon>mdi-message</v-icon>
             </v-btn>
             <span class="subtitle-2">chat</span>
           </v-col>
           <v-col cols="6" class="d-flex flex-column align-center">
-            <v-btn icon @click='focus'>
+            <v-btn icon @click='focus' :loading='loading'>
               <v-icon v-if='!isFocus'>mdi-plus-box-outline</v-icon>
               <v-icon v-else>mdi-check</v-icon>
             </v-btn>
@@ -35,11 +35,9 @@ export default {
   data: function () {
     return {
       isFocus: false,
-      focusText: 'follow'
+      focusText: 'follow',
+      loading: false
     }
-  },
-  mounted () {
-    console.log(this.$route)
   },
   methods: {
     focus: function () {

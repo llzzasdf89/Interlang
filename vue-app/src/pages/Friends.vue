@@ -4,7 +4,7 @@
   <router-view></router-view>
 </transition>
 <v-content v-if="!$route.params.userID && $route.name!='Chat'" style="background:rgb(243,245,250)">
-<friendItem @click.native='toFriendDetail(1)' >
+<friendItem @click.native='toFriendDetail(i.ID)'  v-for='i in friends' :key='i.ID' :user='i'>
 
 </friendItem>
 </v-content>
@@ -15,11 +15,16 @@
 import friendItem from '@/components/friendItem'
 export default {
   async mounted () {
-    const friends = await this.http.fetchFriends()
-    console.log(friends)
+    const data = await this.http.fetchFriends()
+    this.$data.friends = data.data
   },
   components: {
     friendItem
+  },
+  data: function () {
+    return {
+      friends: []
+    }
   },
   methods: {
     toFriendDetail: function (userID) {
@@ -31,7 +36,7 @@ export default {
         }
         this.$router.push({ name: 'friendDetail', params })
       }).catch(err => {
-        console.log(err)
+        return err
       })
     }
   }

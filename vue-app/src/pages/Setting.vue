@@ -135,6 +135,7 @@ export default {
       if (level.length === 0) return alert('level could not be empty!')
       const tags = this.findMatchedTagsID(selectedTags)
       const FirstLanguageID = this.findMatchedLanguageID(FirstLanguage)
+      const interestedLanguageID = this.findMatchedLanguageIDs(interstedLanguage)
       const params = {
         avatar,
         tags: tags.toString(),
@@ -142,8 +143,8 @@ export default {
         firstLanguage: FirstLanguageID
       }
       this.http.post('/user/interestedlanguage', {
-        interestedLanguage: interstedLanguage,
-        level
+        interestedLanguage: interestedLanguageID.toString(),
+        level: level.toString()
       }).then(res => {
         console.log(res)
       }).catch(err => {
@@ -183,10 +184,21 @@ export default {
     },
     findMatchedLanguageID (selectedLanguage) {
       const allLanguages = this.$store.state.languages
-      const matchID = allLanguages.map(v => {
-        if (v.Name === selectedLanguage) return v.ID
-      })[0] || -1
+      let matchID = -1
+      for (const i of allLanguages) {
+        if (i.Name === selectedLanguage) matchID = i.ID
+      }
       return matchID
+    },
+    findMatchedLanguageIDs (selectedLanguage) {
+      const allLanguages = this.$store.state.languages
+      const matchedID = []
+      for (let i = 0; i < allLanguages.length; i++) {
+        for (let j = 0; j < selectedLanguage.length; j++) {
+          if (selectedLanguage[j] === allLanguages[i].Name) matchedID.push(allLanguages[i].ID)
+        }
+      }
+      return matchedID
     }
   }
 }

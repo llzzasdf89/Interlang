@@ -19,11 +19,11 @@
               <template v-slot:activator>
                 <v-list-item-content>Intersted Languages</v-list-item-content>
               </template>
-              <v-list-item v-for="n in user.interstedLanguages" :key="n.value">
+              <v-list-item v-for="n in user.InterestedLanguages" :key="n.value">
                 <v-list-item-content>
                   <v-list-item-title class="d-flex px-10 justify-space-between">
-                    {{n.language}}
-                    <span>{{n.value}}</span>
+                    {{n.Name}}
+                    <span>{{n.Level}}</span>
                   </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
@@ -33,14 +33,6 @@
 </template>
 <script>
 export default {
-  props: ['user'],
-  data: function () {
-    return {
-      interstingLanguageItems: [
-        { language: 'English', value: 'beginner' },
-        { language: 'Germany', value: 'advanced' }
-      ]
-    }
-  }
+  props: ['user']
 }
 </script>

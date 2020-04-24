@@ -155,7 +155,7 @@ export default {
       repassword: '',
       confirmRules: [v => !!v || 'Re-enter your password to confirm', v => v === this.$data.password || 'The two passwords should be exactly the same'],
       email: '',
-      emailRules: [v => !!v || 'Email is required', v => /^([a-zA-Z]|[0-9])(\w|\\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(v) || 'Type in your valid email address and tap the plane'],
+      emailRules: [v => !!v || 'Email is required', v => /^([a-zA-Z]|[0-9])(\w|\\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(v) || 'Please type in a valid email'],
       verificationCode: '',
       verificationCodeRules: [v => !!v || 'Input the verification code received in your email which should be a 6-digit number', v => /^\d{6}$/.test(v) || 'verificationCode should be 6 digits number']
     }
@@ -164,8 +164,8 @@ export default {
     goBack: function () {
       this.$router.go(-1)
     },
-    setToken (token) {
-      this.$store.commit('updateToken', token)
+    setToken (token, expireTime) {
+      localStorage.setItem('expireTime', expireTime)
       localStorage.setItem('token', token)
     },
     submitData: function () {
@@ -189,7 +189,8 @@ export default {
         if (isSuccess && isLogin) {
           alert('Login Success!')
           const token = res.data.data.token
-          this.fetchUserData(token)
+          const expireTime = res.data.data.expireTime
+          this.fetchUserData(token, expireTime)
         } else if (isSuccess && !isLogin) {
           alert('Register success!')
           this.$router.back()
@@ -197,9 +198,9 @@ export default {
         else if (!isSuccess && !isLogin) alert('Register failed ' + res.data.msg)
         this.$data.loginLoading = false
       }).catch(err => {
-        console.log(err)
-        alert('Sorry,an error occured during the process, please try again')
+        alert('Sorry,an error occured during the process, please try again' + err)
         this.$data.loginLoading = false
+        return err
       })
     },
     sendCodeMail: function () {
@@ -215,23 +216,24 @@ export default {
     fetchTags () {
       this.http.get('tags/list').then(res => {
         if (res.success) {
+          this.fetchLanguages()
           this.$store.commit('updateTags', res.data)
-        } else console.log(res)
+        } else return res
       }).catch(err => {
-        console.log(err)
+        return err
       })
     },
-    fetchUserData: function (token) {
-      this.setToken(token)
+    fetchUserData: function (token, expireTime) {
+      this.setToken(token, expireTime)
       this.http.get('/user/info').then(res => {
         if (res.success) {
-          this.fetchSetting()
           this.fetchTags()
           this.fetchLanguages()
+          this.fetchSetting()
           this.$store.commit('updateUser', res.data)
         }
       }).catch(err => {
-        console.log(err)
+        return err
       })
     },
     fetchLanguages: function () {
@@ -241,7 +243,7 @@ export default {
           this.$store.commit('updateLanguage', languages)
         }
       }).catch(err => {
-        console.log(err)
+        return err
       })
     },
     fetchSetting: function () {
@@ -252,7 +254,7 @@ export default {
           this.$router.push('/index/Home')
         }
       }).catch(err => {
-        console.log(err)
+        return err
       })
     }
   }

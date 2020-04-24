@@ -17,13 +17,13 @@
           </div>
           <div :class="type==='comment'?'hiddenInput':''">
             <v-icon left small>mdi-pen</v-icon>
-            <span class="subtitle-2 font-weight-black">{{messageObj.User.Intersts}}</span>
+            <span class="subtitle-2 font-weight-black">{{InterstedLanguages}}</span>
           </div>
           <p :class="type==='comment'?'hiddenInput':''">Question about {{messageObj.Language}}</p>
           <div
             class="text--primary"
             style='white-space:pre-wrap'
-          >{{messageObj.Content}}</div>
+          >{{content}}</div>
           <div class="text-center">
           </div>
           <div class="mt-2">
@@ -70,10 +70,14 @@ export default {
       liked: false,
       unliked: false,
       likeLoading: false,
-      unlikeLoading: false
+      unlikeLoading: false,
+      content: '',
+      InterstedLanguages: ''
     }
   },
   mounted () {
+    this.$data.content = unescape(this.messageObj.Content)
+    this.$data.InterstedLanguages = this.messageObj.User.InterestedLanguages.map(v => v.Name).toString()
     this.$data.liked = this.Liked
     this.$data.unliked = this.Unliked
   },

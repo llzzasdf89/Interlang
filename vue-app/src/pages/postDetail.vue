@@ -101,9 +101,10 @@ export default {
     },
     findMatchedLanguageID (selectedLanguage) {
       const allLanguages = this.$store.state.languages
-      const matchID = allLanguages.map(v => {
-        if (v.Name === selectedLanguage) return v.ID
-      })[0] || -1
+      let matchID = -1
+      for (const i of allLanguages) {
+        if (i.Name === selectedLanguage) matchID = i.ID
+      }
       return matchID
     },
     submit: function () {

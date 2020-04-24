@@ -1,6 +1,6 @@
 <template>
 <v-content>
-<friendItem @click.native='toFriendDetail(1)'></friendItem>
+<friendItem v-for='user in $route.params.users' :key='user.ID' :user='user' @click.native='toFriendDetail(user)'></friendItem>
 </v-content>
 
 </template>
@@ -11,10 +11,10 @@ export default {
     friendItem
   },
   methods: {
-    toFriendDetail: function (userID) {
+    toFriendDetail: function (user) {
       const params = {
         from: 'Focus',
-        userID
+        user
       }
       this.$router.push({ name: 'friendDetail', params })
     }

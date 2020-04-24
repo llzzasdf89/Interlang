@@ -1,7 +1,6 @@
 export const detailTemplateCommonData = {
   data () {
     return {
-      languages: ['English', 'French', 'Germany', 'Chinese'],
       selectedLangauge: '',
       languageRules: [v => !!v || 'Language must be selected'],
       inputRules: [v => !!v || 'Input is required'],
@@ -9,6 +8,9 @@ export const detailTemplateCommonData = {
     }
   },
   computed: {
+    languages: function () {
+      return this.$store.state.languages
+    },
     hint: function () {
       return this.$route.params.hint
     },

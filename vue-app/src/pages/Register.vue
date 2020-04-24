@@ -58,7 +58,7 @@
                     v-show="!$route.params.isLogin"
                     required
                   >
-                    <template v-slot:append>
+                    <!-- <template v-slot:append>
                       <v-tooltip bottom>
                         <template v-slot:activator = "{ on }">
                           <v-btn v-on='on' icon :loading='vCodeLoading'  :disabled='!email' @click='sendCodeMail'>
@@ -72,9 +72,9 @@
                         </template>
                         click to send verification code
                       </v-tooltip>
-                    </template>
+                    </template> -->
                   </v-text-field>
-                  <v-text-field
+                  <!-- <v-text-field
                     id="verificationCode"
                     label="verificationCode"
                     name="verificationCode"
@@ -85,7 +85,7 @@
                     :rules='verificationCodeRules'
                     v-if="!$route.params.isLogin"
                     required
-                  />
+                  /> -->
                 </v-form>
                 <v-form v-else v-model='isDataValid'>
                    <v-text-field
@@ -145,38 +145,28 @@ export default {
       seconds: 60,
       usernameRules: [
         v => !!v || 'username is required',
-        v => /^[a-zA-Z0-9_-]{4,16}$/.test(v) || 'The user name consists of 4-16 letters, numbers, underscores, and subtractions, and must begin with a letter'],
+        v => /^[a-zA-Z0-9_-]{4,16}$/.test(v) || 'Each username must be at least 4, but no more than 16 characters and must begins with a letter. It can only contain letters(A-Z,a-z),numbers(0-9),underscores(-) and hyphens(_)'],
       username: '',
       password: '',
       passwordRules: [
         v => !!v || 'password is required',
-        v => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(v) || 'Password should contain least 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 digit:'
+        v => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(v) || 'Each password must contain at least 8 characters including at least 1 uppercase letter(A-Z), 1 lowercase letter(a-z) and 1 number (0-9)'
       ],
       repassword: '',
-      confirmRules: [v => v === this.$data.password || 'The password is not equal', v => v === this.$data.password || 'The password is not equal'],
+      confirmRules: [v => !!v || 'Re-enter your password to confirm', v => v === this.$data.password || 'The two passwords should be exactly the same'],
       email: '',
-      emailRules: [v => !!v || 'Email is required', v => /^([a-zA-Z]|[0-9])(\w|\\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(v) || 'email is invalid'],
+      emailRules: [v => !!v || 'Email is required', v => /^([a-zA-Z]|[0-9])(\w|\\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(v) || 'Type in your valid email address and tap the plane'],
       verificationCode: '',
-      verificationCodeRules: [v => !!v || 'verification code is required', v => /^\d{6}$/.test(v) || 'verificationCode should be 6 digits number']
+      verificationCodeRules: [v => !!v || 'Input the verification code received in your email which should be a 6-digit number', v => /^\d{6}$/.test(v) || 'verificationCode should be 6 digits number']
     }
   },
   methods: {
     goBack: function () {
       this.$router.go(-1)
     },
-    fetchUserData: function (token) {
-      this.setToken(token)
-      this.http.get('/user/info').then(res => {
-        if (res.success) {
-          console.log(res.data)
-          this.$store.commit('updateUser', res.data)
-        }
-      }).catch(err => {
-        console.log(err)
-      })
-    },
     setToken (token) {
       this.$store.commit('updateToken', token)
+      localStorage.setItem('token', token)
     },
     submitData: function () {
       this.$data.loginLoading = true
@@ -187,25 +177,24 @@ export default {
       }
       if (!isLogin) {
         params.repassword = this.$data.repassword
-        params.verificationCode = this.$data.verificationCode
         params.email = this.$data.email
       }
       this.register_login(params)
     },
     register_login: function (paramsObj) {
       const isLogin = this.$route.params.isLogin
-      this.http.post('/user/login', paramsObj).then(res => {
+      const url = isLogin ? '/user/login' : '/user/register'
+      this.http.post(url, paramsObj).then(res => {
         const isSuccess = res.data.success
         if (isSuccess && isLogin) {
           alert('Login Success!')
           const token = res.data.data.token
           this.fetchUserData(token)
-          this.$router.push('/index/user/setting', { from: 'login' })
         } else if (isSuccess && !isLogin) {
           alert('Register success!')
-          this.$router.goBack()
+          this.$router.back()
         } else if (!isSuccess && isLogin) alert('Username or password error, please check again')
-        else if (!isSuccess && !isLogin) alert('Register failed, please check your information')
+        else if (!isSuccess && !isLogin) alert('Register failed ' + res.data.msg)
         this.$data.loginLoading = false
       }).catch(err => {
         console.log(err)
@@ -222,6 +211,49 @@ export default {
           this.$seconds = 60
         } else this.$data.seconds--
       }, 1000)
+    },
+    fetchTags () {
+      this.http.get('tags/list').then(res => {
+        if (res.success) {
+          this.$store.commit('updateTags', res.data)
+        } else console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    fetchUserData: function (token) {
+      this.setToken(token)
+      this.http.get('/user/info').then(res => {
+        if (res.success) {
+          this.fetchSetting()
+          this.fetchTags()
+          this.fetchLanguages()
+          this.$store.commit('updateUser', res.data)
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    fetchLanguages: function () {
+      this.http.get('/language/list').then(res => {
+        if (res.success) {
+          const languages = res.data
+          this.$store.commit('updateLanguage', languages)
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    fetchSetting: function () {
+      this.http.get('user/newcomer').then(res => {
+        if (res.success) {
+          this.$router.push('/index/user/setting')
+        } else {
+          this.$router.push('/index/Home')
+        }
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }

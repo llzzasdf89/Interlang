@@ -19,10 +19,16 @@ export default {
   },
   methods: {
     toFriendDetail: function (userID) {
-      const params = {
-        userID
-      }
-      this.$router.push({ name: 'friendDetail', params })
+      this.http.get('/user/info/' + userID).then(res => {
+        const user = res.data
+        const params = {
+          userID,
+          user
+        }
+        this.$router.push({ name: 'friendDetail', params })
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }

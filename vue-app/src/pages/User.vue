@@ -8,35 +8,35 @@
         <v-card class="d-flex align-center mt-6" outlined>
           <v-col cols="2">
             <v-avatar left>
-              <v-img :src="user.Avatar"></v-img>
+              <v-img :src="user.Avatar || ''"></v-img>
             </v-avatar>
           </v-col>
           <v-col cols="10" class="text-start">
             <v-list two-line>
               <v-list-item-title class="font-weight-bold">{{user.Name}}</v-list-item-title>
-              <v-list-item-subtitle class="font-weight-medium">♂</v-list-item-subtitle>
+              <v-list-item-subtitle class="font-weight-medium">{{user.Gender==='male'?'♂':'♀'}}</v-list-item-subtitle>
             </v-list>
           </v-col>
         </v-card>
         <v-card outlined class="mt-6">
           <v-row no-gutters>
-            <v-col cols="5" @click='toFocus("Your Follows")'>
+            <v-col cols="5" @click='toFocus("Focus")'>
               <v-list-item two-line>
                 <v-list-item-content class="text-center">
-                  <v-list-item-title class="capition">Follow</v-list-item-title>
+                  <v-list-item-title class="capition">Followed</v-list-item-title>
                   <v-list-item-subtitle class="display-1">
-                     2
+                     {{user.Focus}}
                   </v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
             </v-col>
             <v-col cols='2'><v-divider vertical></v-divider></v-col>
-            <v-col cols="5" @click='toFocus("Your Follower")'>
+            <v-col cols="5" @click='toFocus("Fans")'>
               <v-list-item two-line>
                 <v-list-item-content class="text-center">
                   <v-list-item-title class="capition">Follower</v-list-item-title>
                   <v-list-item-subtitle class="display-1">
-                        2
+                        {{user.Fans}}
                   </v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
@@ -55,6 +55,7 @@
             </v-col>
           </v-row>
         </v-card>
+        <tags :isDisabled=true :tags='user.Interests'></tags>
         <userReport :user='user'></userReport>
         <v-footer app>
           <v-col cols='12'> <v-btn block rounded x-large color="primary" @click="toSetting">Settings</v-btn></v-col>
@@ -65,16 +66,11 @@
 </template>
 <script>
 import userReport from '@/components/userReport'
+import tags from '@/components/tags'
 export default {
-  mounted () {
-    this.http.get('/user/focus').then(res => {
-      console.log(res)
-    }).catch(err => {
-      console.log(err)
-    })
-  },
   components: {
-    userReport
+    userReport,
+    tags
   },
   computed: {
     user: function () {
@@ -83,25 +79,35 @@ export default {
   },
   data: function () {
     return {
-      items: [{ icon: 'mdi-thumb-up', text: 'Number of like you got', value: 20 }],
-      motherLanguage: { language: '中文', value: 'native' },
-      interstingLanguageItems: [
-        { language: '英语', value: 'beginner' },
-        { language: '德语', value: 'advanced' }
-      ]
+      items: [{ icon: 'mdi-thumb-up', text: 'Number of like you got', value: 20 }]
     }
   },
   methods: {
     toSetting: function () {
       this.$router.push({ name: 'Setting' })
     },
-    toFocus: function (title) {
-      this.$router.push({
-        name: 'Focus',
-        params: {
-          title
+    toFocus: async function (title) {
+      if (title === 'Focus') {
+        const users = await this.http.fetchFocus()
+        const params = {
+          title: 'You followed',
+          users
         }
-      })
+        this.$router.push({
+          name: 'Focus',
+          params
+        })
+      } else {
+        const users = await this.http.fetchFans()
+        const params = {
+          title: 'Your follower',
+          users
+        }
+        this.$router.push({
+          name: 'Focus',
+          params
+        })
+      }
     }
   }
 }

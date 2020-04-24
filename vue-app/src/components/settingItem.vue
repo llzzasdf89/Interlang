@@ -19,7 +19,7 @@ export default {
   },
   computed: {
     languages: function () {
-      const languages = this.$store.state.languages
+      const languages = this.$store.state.languages.map(v => v.Name)
       return languages
     },
     levels: function () {

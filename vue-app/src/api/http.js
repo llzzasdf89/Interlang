@@ -5,26 +5,53 @@ axios.defaults.timeout = 30000
 axios.defaults.baseURL = 'http://101.132.114.219:8888'
 axios.interceptors.request.use(
   config => {
-    if (config.url === '/user/login') {
-      config.headers = {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    } else {
-      const token = store.state.token || ''
+    const token = store.state.token || localStorage.getItem('token')
+    if (config.url !== '/user/login') {
       config.headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
         Authorization: token
       }
     }
-    console.log(config)
     return config
   },
   err => {
-    console.log(err)
+    return err
   }
 )
 
 export default {
+  fetchFans: function () {
+    return this.get('/user/fans')
+  },
+  getUserInLans () {
+    this.get('/user/interestedLanguage').then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+  },
+  fetchFocus: function () {
+    return this.get('/user/focus')
+  },
+  fetchTags () {
+    this.get('tags/list').then(res => {
+      if (res.success) {
+        store.commit('updateTags', res.data)
+      } else console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+  },
+  fetchLanguages: function () {
+    this.get('/language/list').then(res => {
+      if (res.success) {
+        const languages = res.data
+        store.commit('updateLanguage', languages)
+      }
+    }).catch(err => {
+      console.log(err)
+    })
+  },
   get (url, params = {}) {
     return new Promise((resolve, reject) => {
       axios.get(url, qs.stringify(params))

@@ -2,12 +2,6 @@
   <v-content >
     <v-container class="fill-height d-flex flex-column align-content-start">
       <v-list class="text-left" width="100%" style="background:rgb(243,245,250)">
-        <v-list-item-title>Set your name</v-list-item-title>
-      </v-list>
-      <v-list width="100%" style="background:rgb(243,245,250)">
-        <v-text-field solo rounded v-model="name" :rules='nameRules'></v-text-field>
-      </v-list>
-      <v-list class="text-left" width="100%" style="background:rgb(243,245,250)">
         <v-list-item-title >Set your gender</v-list-item-title>
       </v-list>
       <v-list width="100%" style="background:rgb(243,245,250)">
@@ -18,6 +12,12 @@
       </v-list>
       <v-list width="100%" style="background:rgb(243,245,250)">
         <v-file-input solo rounded @change='submitAvatar' accept='.jpeg, .png, .jpg'></v-file-input>
+      </v-list>
+      <v-list class="text-left" width="100%" style="background:rgb(243,245,250)">
+        <v-list-item-title >Select your tags</v-list-item-title>
+      </v-list>
+      <v-list width="100%" style="background:rgb(243,245,250)" >
+          <v-select :items="tags" rounded solo  multiple v-model='selectedTags'></v-select>
       </v-list>
       <v-list two-line class="text-left" width="100%" style="background:rgb(243,245,250)">
         <v-list-item-title>Mother tongue</v-list-item-title>
@@ -43,7 +43,7 @@
           <v-btn block rounded x-large color="primary" @click="submit">submit</v-btn>
         </v-col>
         <v-col cols="12">
-          <v-btn block rounded x-large color="primary" @click="logOut">Login Out</v-btn>
+          <v-btn block rounded x-large color="primary" @click="logOut">Log Out</v-btn>
         </v-col>
       </v-footer>
     </v-container>
@@ -57,8 +57,6 @@ export default {
   },
   data: function () {
     return {
-      name: '' || this.$store.state.user.Name,
-      nameRules: [v => !!v || 'The name can not be empty'],
       sex: ['male', 'female'],
       sexRules: [v => !!v || 'The sex can not be empty'],
       selectedSex: '',
@@ -67,7 +65,18 @@ export default {
       Avartar: '',
       mothertongue: '' || this.$store.state.user.FirstLanguage,
       interstedLanguages: [],
+      selectedTags: [],
       selectedLevels: []
+    }
+  },
+  computed: {
+    tags: function () {
+      let tags = this.$store.state.tags
+      tags = tags.map(v => v.Name)
+      return tags
+    },
+    user: function () {
+      return this.$store.state.user
     }
   },
   methods: {
@@ -100,6 +109,7 @@ export default {
       this.$router.push('/begin')
     },
     submitAvatar: function (e) {
+      this.$data.Avartar = e
       if (e) {
         const reader = new FileReader()
         reader.readAsDataURL(e)
@@ -109,36 +119,46 @@ export default {
       }
     },
     submit: function () {
-      const interstArr = this.$data.interstedLanguages
-      const repeat = this.checkInLanguagesRepeat(interstArr)
-      if (repeat) alert('You can not choose same intersted languages !')
-      else {
-        const sex = this.$data.selectedSex
-        const name = this.$data.name
-        const mothertongue = this.$data.mothertongue
-        const levels = this.$data.selectedLevels
-        if (!name) {
-          alert('Name could not be empty!')
-          return
-        }
-        if (!sex) {
-          alert('Sex could not be empty!')
-          return
-        }
-        if (!mothertongue) {
-          alert('mother tongue could not be empty!')
-          return
-        }
-        if (interstArr.length === 0) {
-          alert('interst language could not be empty!You must choose at least 1 intersted language')
-          return
-        }
-        if (levels.length === 0) {
-          alert('level could not be empty!')
-          return
-        }
-        this.$router.push('/index/user')
+      const interstedLanguage = this.$data.interstedLanguages
+      const isRepeat = this.checkInLanguagesRepeat(interstedLanguage)
+      const avartar = this.$data.Avartar
+      const selectedTags = this.$data.selectedTags
+      const gender = this.$data.selectedSex
+      const FirstLanguage = this.$data.mothertongue
+      const level = this.$data.selectedLevels
+      if (isRepeat) return alert('You can not choose same intersted languages !')
+      if (!gender) return alert('Gender could not be empty!')
+      if (!avartar) return alert('avatar could not be empty!')
+      if (selectedTags.length === 0) return alert('you should choose some tags')
+      if (!FirstLanguage) return alert('mother tongue could not be empty!')
+      if (interstedLanguage.length === 0) return alert('interst language could not be empty! You must choose at least 1 intersted language')
+      if (level.length === 0) return alert('level could not be empty!')
+      const tags = this.findMatchedTagsID(selectedTags)
+      const params = {
+        avartar,
+        tags,
+        gender,
+        firstLanguage: FirstLanguage
       }
+      this.http.post('/user/interestedlanguage', {
+        interstedLanguage,
+        level
+      }).then(res => {
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
+      this.http.post('/user/setting', params).then(res => {
+        if (res.data.success) {
+          console.log(res)
+          alert('edit setting success')
+          this.$router.push({ name: 'Home' })
+        } else {
+          alert('edit setting error ' + res.data.msg)
+        }
+      }).catch(err => {
+        console.log(err)
+      })
     },
     checkInLanguagesRepeat: function (inArr) {
       for (let i = 0; i < inArr.length - 1; i++) {
@@ -147,6 +167,16 @@ export default {
         }
       }
       return false
+    },
+    findMatchedTagsID (selectedTags) {
+      const allTags = this.$store.state.tags
+      const matchedTagID = []
+      for (let i = 0; i < allTags.length; i++) {
+        for (let j = 0; j < selectedTags.length; j++) {
+          if (selectedTags[j] === allTags[i].Name) matchedTagID.push(allTags[i].ID)
+        }
+      }
+      return matchedTagID
     }
   }
 }

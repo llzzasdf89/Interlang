@@ -19,7 +19,7 @@
               <template v-slot:activator>
                 <v-list-item-content>Intersted Languages</v-list-item-content>
               </template>
-              <v-list-item v-for="n in interstingLanguageItems" :key="n.value">
+              <v-list-item v-for="n in user.interstedLanguages" :key="n.value">
                 <v-list-item-content>
                   <v-list-item-title class="d-flex px-10 justify-space-between">
                     {{n.language}}

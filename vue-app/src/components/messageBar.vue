@@ -22,7 +22,7 @@
   <v-textarea dense auto-grow hide-details rows='1' outlined ref='input' v-model='textareaInput'></v-textarea>
 </v-col>
 <v-col cols='2'>
-<v-btn icon :loading="loading" @click="load" :disabled="!hasUserInput">
+<v-btn icon :loading="loading" :disabled="!hasUserInput">
 <v-icon @click='sendComment'>mdi-arrow-right</v-icon>
 </v-btn>
 </v-col>
@@ -32,6 +32,7 @@
 <script>
 // eslint-disable-next-line no-unused-vars
 export default {
+  props: ['messageObj'],
   watch: {
     textareaInput: function (n, o) {
       if (n !== '') {
@@ -54,14 +55,24 @@ export default {
     store.commit('appendDom', textAreaDom)// textarea的DOM绑定到Vuex的全局变量store中)
   },
   methods: {
-    load: function () {
-      this.$data.loading = !this.$data.loading
-      setTimeout(() => {
-        this.$data.loading = false
-        this.$emit('showAlert')
-      }, 3000)
-    },
     sendComment: function () {
+      const questionID = this.messageObj.ID
+      const content = this.$data.textareaInput
+      this.$data.loading = !this.$data.loading
+      this.http.post('/question/answer', {
+        questionID,
+        content
+      }).then(res => {
+        console.log(res)
+        if (res.data.success) {
+          this.$emit('showAlert', true)
+        } else {
+          this.$emit('showAlert', false)
+        }
+        this.$data.loading = false
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }

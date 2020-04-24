@@ -8,8 +8,8 @@
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title >Richard</v-list-item-title>
-            <span class="subtitle-2 text--secondary">Chinese:native>German:beginner</span>
+            <v-list-item-title >{{user.Name}}</v-list-item-title>
+            <span class="subtitle-2 text--secondary">{{user.FirstLanguage}}:native>German:beginner</span>
             <v-list-item-subtitle >♂</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
@@ -17,3 +17,8 @@
     </v-list>
 </div>
 </template>
+<script>
+export default {
+  props: ['user']
+}
+</script>

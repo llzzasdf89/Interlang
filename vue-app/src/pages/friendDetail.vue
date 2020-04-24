@@ -1,12 +1,12 @@
 <template>
-  <v-content>
+  <v-content style="background: rgb(243, 245, 250);">
     <transition>
   <router-view></router-view>
 </transition>
     <v-container app class="fill-height d-flex align-content-start fluid align-center " v-if="$route.name!='Chat'" style="background:rgb(243,245,250)">
-      <friendItem></friendItem>
-      <tags :isDisabled="true" :textColor="'white'"></tags>
-      <userReport class='mx-5'></userReport>
+      <friendItem :user='$route.params.user'></friendItem>
+      <tags :isDisabled="true" :textColor="'white'" :tags='$route.params.user.Interests'></tags>
+      <userReport class='mx-5' :user='$route.params.user'></userReport>
       <v-footer app>
         <v-row dense>
           <v-col cols="6" class="d-flex flex-column align-center">
@@ -37,6 +37,9 @@ export default {
       isFocus: false,
       focusText: 'follow'
     }
+  },
+  mounted () {
+    console.log(this.$route)
   },
   methods: {
     focus: function () {

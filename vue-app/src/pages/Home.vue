@@ -4,7 +4,7 @@
       <transition>
   <router-view></router-view>
 </transition>
-<scroller v-if="$route.name === Home"
+<scroller v-if="$route.name === 'Home'"
           ref="my_scroller"
           :on-infinite="infinite"
           noDataText="no more questions"
@@ -27,11 +27,11 @@
                 <v-card-actions>
                   <v-list-item class="grow">
                     <v-list-item-avatar color="grey darken-3">
-                      <v-img class="elevation-6" src="@/assets/IMG_3154.jpeg"></v-img>
+                      <v-img class="elevation-6" :src="item.User.Avatar" @click='toUserDetail(item.User.ID)'></v-img>
                     </v-list-item-avatar>
 
                     <v-list-item-content>
-                      <v-list-item-title>Richard Lee</v-list-item-title>
+                      <v-list-item-title>{{item.User.Name}}</v-list-item-title>
                     </v-list-item-content>
 
                     <v-row align="center" justify="end">
@@ -70,17 +70,35 @@ export default {
   },
   methods: {
     infinite: function (e) {
-      this.fetchQuestions(this.$data.page++, true)
+      setTimeout(() => {
+        this.fetchQuestions(this.$data.page++, true)
+      }, 1000)
     },
     scroll: function (e) {
       console.log(e)
     },
+    toUserDetail (userID) {
+      this.http.get(`/user/info/${userID}`).then(res => {
+        if (res.success) {
+          const user = res.data
+          this.$router.push({
+            name: 'friendDetail',
+            params: {
+              user
+            }
+          })
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    },
     fetchQuestions: function (page = 0, loadmore = false) {
-      this.http.get(`/questions/?page=${page}`).then(res => {
+      const that = this
+      this.http.get(`/questions/list?page=${page}`).then(res => {
         if (res.success) {
           const questions = res.data
-          if (loadmore) {
-            this.$refs.my_scroller.finishInfinite(true)
+          that.$refs.my_scroller.finishInfinite(true)
+          if (loadmore && JSON.stringify(res.data) === '[]') {
             return
           }
           const tabs = [...new Set(questions.map((v) => v.Language))]

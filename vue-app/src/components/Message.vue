@@ -1,9 +1,9 @@
 
 <template>
   <v-row>
-    <v-col cols="2"  :order="type==='comment'?'3':''">
+    <v-col cols="2"  :order="type==='comment'?'3':''" class='overflowControl'>
       <v-avatar>
-        <img src="@/assets/IMG_3154.jpeg" />
+        <v-img :src="messageObj.User.Avatar" />
       </v-avatar>
       <span class="text--primary subtitle-2">{{messageObj.User.Name}}</span>
     </v-col>
@@ -22,6 +22,7 @@
           <p :class="type==='comment'?'hiddenInput':''">Question about {{messageObj.Language}}</p>
           <div
             class="text--primary"
+            style='white-space:pre'
           >{{messageObj.Content}}</div>
           <div class="text-center">
           </div>
@@ -63,39 +64,59 @@
 import { dateFilter } from '@/common/dateFilter'
 export default {
   mixins: [dateFilter],
-  props: ['type', 'messageObj'],
+  props: ['type', 'messageObj', 'Liked', 'Disliked'],
   data: function () {
     return {
       liked: false,
-      likeLoading: false,
       unliked: false,
+      likeLoading: false,
       unlikeLoading: false
     }
+  },
+  mounted () {
+    this.$data.liked = this.Liked
+    this.$data.unliked = this.Unliked
   },
   methods: {
     changeState: function () {
       const store = this.$store
       store.commit('clickOnDom')
     },
-    like: function () {
-      this.$data.likeLoading = true
-      const answerID = this.messageObj.ID
-      this.http.post(`like?answerID=${answerID}`).then(res => {
-        console.log(res)
+    postlike: function (method, answerID) {
+      this.http.post(`like/${method}`, {
+        answerID
+      }).then(res => {
+        if (res.data.success) this.$data.liked = !this.$data.liked
+        setTimeout(() => {
+          this.$data.likeLoading = false
+        }, 1000)
       }).catch(err => {
         console.log(err)
       })
-      setTimeout(() => {
-        this.$data.likeLoading = false
-        this.$data.liked = !this.$data.liked
-      }, 1000)
+    },
+    like: function () {
+      this.$data.likeLoading = true
+      const answerID = this.messageObj.ID
+      if (this.$data.liked) this.postlike('delete', answerID)
+      else this.postlike('add', answerID)
     },
     unlike: function () {
       this.$data.unlikeLoading = true
-      setTimeout(() => {
-        this.$data.unlikeLoading = false
-        this.$data.unliked = !this.$data.unliked
-      }, 1000)
+      const answerID = this.messageObj.ID
+      if (this.$data.unliked) this.postunlike('delete', answerID)
+      else this.postunlike('add', answerID)
+    },
+    postunlike: function (method, answerID) {
+      this.http.post(`dislike/${method}`, {
+        answerID
+      }).then(res => {
+        if (res.data.success) this.$data.unliked = !this.$data.unliked
+        setTimeout(() => {
+          this.$data.unlikeLoading = false
+        }, 1000)
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }

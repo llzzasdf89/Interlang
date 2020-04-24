@@ -1,3 +1,4 @@
+
 <template>
   <v-container app class="text-left fill-height">
     <v-row>
@@ -12,11 +13,11 @@
           <v-divider></v-divider>
           <v-row v-if="fileObj !== null" class="my-2">
             <v-col cols="12" class="img-container-pos">
-              <v-img :src="fileObj.fileType==='Image'?fileObj.fileData:'../assets/file.jpg'" height="150px" width="150px" class="border"></v-img>
+              <v-img :src="fileObj.fileType==='Image'?fileObj.fileData:alt " alt='document' height="150px" width="150px" class="border"></v-img>
               <v-icon class="img-icon-delete-pos" @click="deleteFile">mdi-close-box</v-icon>
             </v-col>
           </v-row>
-          <tags></tags>
+          <tags :tags='tags'></tags>
         </v-form>
         <v-divider></v-divider>
       </v-col>
@@ -55,6 +56,9 @@ export default {
     detailTemplateD
   },
   computed: {
+    tags: function () {
+      return this.$store.state.tags
+    },
     detailTemplate: function () {
       let detailTemplate
       const templateType = this.$route.params.type
@@ -67,6 +71,7 @@ export default {
   },
   data: function () {
     return {
+      alt: '../assets/file.jpg',
       input: '',
       inputB: '',
       selectedLanguage: '',
@@ -94,18 +99,57 @@ export default {
       const input = this.$data.input
       const inputB = this.$data.inputB || ''
       const selectedLanguage = this.$data.selectedLanguage
-      const tags = this.$data.selectedTags
+      // const tags = this.$data.selectedTags
+      const type = this.$route.params.type
+      const hint = this.$children[3].$route.params.hint
+      const endSentence = this.$children[3].$route.params.endSentence
+      const content = this.embedContent(type, input, inputB, selectedLanguage, hint, endSentence)
       const params = {
-        input,
-        selectedLanguage,
-        tags
+        content,
+        languageID: 1,
+        tags: [1, 2]
       }
-      if (inputB !== undefined) {
-        params.inputB = inputB
-      }
+      this.http.post('/question/add', params).then(res => {
+        if (res.success) alert('Post question Success!')
+      }).catch(err => {
+        alert(err)
+      })
     },
     goBack: function () {
       this.$router.back()
+    },
+    findMatchedTagsID (selectedTags) {
+      const allTags = this.$store.state.tags
+      const matchedTagID = []
+      for (let i = 0; i < allTags.length; i++) {
+        for (let j = 0; j < selectedTags.length; j++) {
+          if (selectedTags[j] === allTags[i].Name) matchedTagID.push(allTags[i].ID)
+        }
+      }
+      return matchedTagID
+    },
+    embedContent (type, input, inputB, selectedLanguage, hint = '', endSentence = '') {
+      switch (type) {
+        case 'A':return `
+        ${input} 
+        in 
+        ${selectedLanguage} 
+        How to express `
+        case 'B':return `
+        ${input}
+        and
+        ${inputB}
+        What's the difference?If it's hard to explain, please list out some example
+        `
+
+        case 'C': return input
+        case 'D':
+          return `
+        ${hint || 'Could you tell me'}
+        ${input}
+        ${endSentence || 'The meaning'}
+        `
+      }
     }
   }
 }

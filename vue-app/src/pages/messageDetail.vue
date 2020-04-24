@@ -2,11 +2,11 @@
 
 <v-container app fluid style="background:rgb(243,245,250)" class='fill-height'>
 <Message :messageObj ='$route.params.messageObj'> </Message>
-<Message v-for='item in comments' :key='item.ID' type='comment'  :messageObj="item"> </Message>
-<v-alert type='success' transition="scale-transition" :value='showAlert'>
-reply success
+<Message v-for='item in comments' :key='item.ID' type='comment'  :messageObj="item" :Liked='item.Liked' :Disliked='item.Disliked'> </Message>
+<v-alert :type="commentSuccess?'success':'error'" transition="scale-transition" :value='showAlert'>
+{{commentSuccess?'reply success':'reply failed'}}
 </v-alert>
-<MessageBar @showAlert='msgAlert' ></MessageBar>
+<MessageBar @showAlert='msgAlert' :messageObj='$route.params.messageObj' ></MessageBar>
 </v-container>
 </template>
 
@@ -20,18 +20,12 @@ export default {
   },
   mounted () {
     if (this.$route.params.messageObj.AnswerCount <= 0) return
-    this.http.get(`/questions/answers?questionID=${this.$route.params.msgID}`).then(res => {
-      if (res.success) {
-        console.log(res.data)
-        this.$data.comments = res.data
-      }
-    }).catch(err => {
-      console.log(err)
-    })
+    this.fetchComment()
   },
   data: function () {
     return {
       showAlert: false,
+      commentSuccess: false,
       comments: []
     }
   },
@@ -41,9 +35,22 @@ export default {
     }
   },
   methods: {
-    msgAlert: function () {
+    msgAlert: function (e) {
       this.$data.showAlert = true
+      if (e) {
+        this.fetchComment()
+        this.$data.commentSuccess = true
+      } else this.$data.commentSuccess = false
       setTimeout(() => { this.$data.showAlert = false }, 1500)
+    },
+    fetchComment: function () {
+      this.http.get(`/questions/answers?questionID=${this.$route.params.msgID}`).then(res => {
+        if (res.success) {
+          this.$data.comments = res.data
+        }
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }

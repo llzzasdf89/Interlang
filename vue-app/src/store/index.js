@@ -9,20 +9,30 @@ export default new Vuex.Store({
     unreadNotificationNum: 0,
     readedNotificationsID: [],
     notificationTimer: null,
-    user: {
-      name: null,
-      sex: null,
-      avatar: null,
-      firstLanguage: null,
-      intersts: null
-    },
-    languages: ['German', 'French', 'Japanese', 'Korean', 'Italian', 'Russian', 'Spanish', 'Portuguese', 'Chinese'],
+    user: null,
+    languages: ['German', 'French', 'Japanese', 'Korean', 'Italian', 'Russian', 'Spanish', 'Portuguese', 'Chinese', 'English'],
     levels: ['beginner', 'elementary', 'intermediate', 'advanced', 'proficient'],
-    Dom: null
+    Dom: null,
+    tags: [
+      'cuisine',
+      'travel',
+      'movie',
+      'music',
+      'medical',
+      'treatment',
+      'education',
+      'job hunting',
+      'shopping',
+      'sports',
+      'entertainment'
+    ]
   },
   mutations: {
     appendDom (state, Dom) {
       state.Dom = Dom
+    },
+    updateLanguage (state, languages) {
+      state.languages = languages
     },
     updateToken (state, token) {
       state.token = token
@@ -38,6 +48,9 @@ export default new Vuex.Store({
     },
     updateUser (state, user) {
       state.user = user
+    },
+    updateTags (state, tags) {
+      state.tags = tags
     },
     clickOnDom () {
       const Dom = this.state.Dom

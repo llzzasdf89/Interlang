@@ -16,11 +16,11 @@
             <span class="subtitle-2">chat</span>
           </v-col>
           <v-col cols="6" class="d-flex flex-column align-center">
-            <v-btn icon @click='focus' :loading='loading'>
+            <v-btn icon @click='focus($route.params.user.ID)' :loading='loading'>
               <v-icon v-if='!isFocus'>mdi-plus-box-outline</v-icon>
               <v-icon v-else>mdi-check</v-icon>
             </v-btn>
-            <span class="subtitle-2">{{focusText}}</span>
+            <span class="subtitle-2">{{isFocus?'followed':'follow'}}</span>
           </v-col>
         </v-row>
       </v-footer>
@@ -39,15 +39,31 @@ export default {
       loading: false
     }
   },
+  mounted () {
+    this.getUserFocused()
+  },
   methods: {
-    focus: function () {
-      const isFocus = this.$data.isFocus
-      this.$data.isFocus = !isFocus
-      if (isFocus) this.$data.focusText = 'follow'
-      else this.$data.focusText = 'followed'
+    focus: async function (userID) {
+      const isHisFans = this.$data.isFocus
+      this.$data.loading = true
+      const res = isHisFans ? await this.http.post('/user/fans/delete' + userID) : await this.http.post('/user/focus/add', { to: userID })
+      console.log(res)
+      if (res.data.success) {
+        this.$data.loading = false
+        this.$data.isFocus = !isHisFans
+      } else alert('Follow partner error, please try again !')
     },
-    toChat: function () {
-      this.$router.push({ name: 'Chat' })
+    getUserFocused: async function () {
+      const userID = this.$store.state.user.ID
+      const hisID = this.$route.params.user.ID
+      const data = await this.http.get('/user/fans/' + hisID)
+      const hisFans = data.data
+      let isHisFans = false
+      hisFans.forEach((v) => {
+        console.log(v)
+        if (v.ID === userID) isHisFans = true
+      })
+      this.$data.isFocus = isHisFans
     }
   },
   components: {

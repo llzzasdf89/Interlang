@@ -17,6 +17,7 @@
           </div>
           <div :class="type==='comment'?'hiddenInput':''">
             <v-icon left small>mdi-pen</v-icon>
+            <span class="subtitle-2 d-inline-block mr-2">Intersted in</span>
             <span class="subtitle-2 font-weight-black">{{InterstedLanguages}}</span>
           </div>
           <p :class="type==='comment'?'hiddenInput':''">Question about {{messageObj.Language}}</p>

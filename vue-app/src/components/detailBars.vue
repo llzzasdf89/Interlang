@@ -1,6 +1,9 @@
 <template>
   <v-toolbar dense bottom elevation="0" class="mt-n2 mb-2" style="background:rgb(243,245,250)">
-    <v-btn icon @click="submitImage">
+    <!-- <v-btn icon @click="submitImage">
+      <v-icon>mdi-image</v-icon>
+    </v-btn> -->
+    <v-btn icon >
       <v-icon>mdi-image</v-icon>
     </v-btn>
     <input
@@ -19,10 +22,16 @@
       accept=".txt, .pdf, .word"
       class="hiddenInput"
     />
-    <v-btn icon @click='recordAudio'>
+    <!-- <v-btn icon @click='recordAudio'>
+      <v-icon>mdi-microphone</v-icon>
+    </v-btn> -->
+    <v-btn icon >
       <v-icon>mdi-microphone</v-icon>
     </v-btn>
-    <v-btn icon @click='submitFile'>
+    <!-- <v-btn icon @click='submitFile'>
+      <v-icon>mdi-file</v-icon>
+    </v-btn> -->
+    <v-btn icon >
       <v-icon>mdi-file</v-icon>
     </v-btn>
   </v-toolbar>

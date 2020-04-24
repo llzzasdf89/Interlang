@@ -13,6 +13,7 @@ axios.interceptors.request.use(
         Authorization: token
       }
     }
+    console.log(config)
     return config
   },
   err => {
@@ -70,6 +71,14 @@ export default {
   post (url, data = {}) {
     return new Promise((resolve, reject) => {
       axios.post(url, qs.stringify(data))
+        .then(response => {
+          resolve(response)
+        }).catch(err => reject(err))
+    })
+  },
+  delete (url, data = {}) {
+    return new Promise((resolve, reject) => {
+      axios.delete(url, qs.stringify(data))
         .then(response => {
           resolve(response)
         }).catch(err => reject(err))

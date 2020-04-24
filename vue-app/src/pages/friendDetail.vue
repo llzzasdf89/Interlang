@@ -3,14 +3,14 @@
     <transition>
   <router-view></router-view>
 </transition>
-    <v-container app class="fill-height d-flex align-content-start fluid align-center overflow-hidden" style="background:rgb(243,245,250)">
+    <v-container app class="fill-height d-flex align-content-start fluid align-center overflow-hidden" style="background:rgb(243,245,250)" v-if="$route.name !=='Chat'">
       <friendItem :user='$route.params.user'></friendItem>
       <tags :isDisabled="true" :textColor="'white'" :tags='$route.params.user.Tags'></tags>
       <userReport class='mx-5' :user='$route.params.user'></userReport>
       <v-footer app>
         <v-row dense>
           <v-col cols="6" class="d-flex flex-column align-center">
-            <v-btn icon>
+            <v-btn icon @click='toChat($route.params.user)'>
               <v-icon>mdi-message</v-icon>
             </v-btn>
             <span class="subtitle-2">chat</span>
@@ -43,11 +43,18 @@ export default {
     this.getUserFocused()
   },
   methods: {
+    toChat (userObj) {
+      this.$router.push({
+        name: 'Chat',
+        params: {
+          user: userObj
+        }
+      })
+    },
     focus: async function (userID) {
       const isHisFans = this.$data.isFocus
       this.$data.loading = true
-      const res = isHisFans ? await this.http.post('/user/fans/delete' + userID) : await this.http.post('/user/focus/add', { to: userID })
-      console.log(res)
+      const res = isHisFans ? await this.http.post('/user/focus/delete/', { userID }) : await this.http.post('/user/focus/add', { to: userID })
       if (res.data.success) {
         this.$data.loading = false
         this.$data.isFocus = !isHisFans
@@ -60,7 +67,6 @@ export default {
       const hisFans = data.data
       let isHisFans = false
       hisFans.forEach((v) => {
-        console.log(v)
         if (v.ID === userID) isHisFans = true
       })
       this.$data.isFocus = isHisFans

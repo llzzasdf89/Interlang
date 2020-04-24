@@ -43,7 +43,7 @@
             </v-col>
           </v-row>
           <v-divider></v-divider>
-          <v-row v-for="n in items" :key="n.value">
+          <v-row>
             <v-col cols="12" class="d-flex justify-space-around">
               <v-list-item>
                 <v-list-item-subtitle class="d-flex justify-space-between align-baseline">
@@ -74,7 +74,6 @@ export default {
   },
   mounted () {
     this.http.get('/user/info').then(res => {
-      console.log(res.data.Avatar)
       this.$data.user = res.data
       this.$store.commit('updateUser', res.data)
     }).catch(err => {
@@ -83,7 +82,6 @@ export default {
   },
   data: function () {
     return {
-      items: [{ icon: 'mdi-thumb-up', text: 'Number of like you got', value: 20 }],
       user: null
     }
   },

@@ -49,8 +49,10 @@ export default {
   mixins: [dateFilter],
   props: ['messageObj'],
   methods: {
-    toUserDetail (userID) {
-      this.$router.push({ name: 'friendDetail', params: { userID } })
+    async toUserDetail (userID) {
+      const data = await this.http.get('/user/info/' + userID)
+      const user = data.data
+      this.$router.push({ name: 'friendDetail', params: { user } })
     },
     toMessageDetail (msgID) {
       this.http.get(`question/${msgID}`).then(res => {

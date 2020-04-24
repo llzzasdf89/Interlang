@@ -13,7 +13,6 @@ axios.interceptors.request.use(
         Authorization: token
       }
     }
-    console.log(config)
     return config
   },
   err => {

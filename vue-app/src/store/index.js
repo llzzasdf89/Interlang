@@ -25,7 +25,8 @@ export default new Vuex.Store({
       'shopping',
       'sports',
       'entertainment'
-    ]
+    ],
+    history: []
   },
   mutations: {
     appendDom (state, Dom) {
@@ -51,6 +52,10 @@ export default new Vuex.Store({
     },
     updateTags (state, tags) {
       state.tags = tags
+    },
+    updateChatHistory (state, historyObj) {
+      const idx = historyObj.oppositeID
+      state.history[idx] = historyObj.history
     },
     clickOnDom () {
       const Dom = this.state.Dom

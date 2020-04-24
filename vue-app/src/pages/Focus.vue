@@ -1,6 +1,6 @@
 <template>
 <v-content>
-<friendItem v-for='user in $route.params.users' :key='user.ID' :user='user' @click.native='toFriendDetail(user)'></friendItem>
+<friendItem v-for='user in $route.params.users' :key='user.ID' :user='user' @click.native='toFriendDetail(user.ID)'></friendItem>
 </v-content>
 
 </template>
@@ -11,7 +11,9 @@ export default {
     friendItem
   },
   methods: {
-    toFriendDetail: function (user) {
+    toFriendDetail: async function (userID) {
+      const data = await this.http.get('/user/info/' + userID)
+      const user = data.data
       const params = {
         from: 'Focus',
         user

@@ -52,9 +52,14 @@ export default {
       })
     },
     focus: async function (userID) {
+      const myID = this.$store.state.user.ID
       const isHisFans = this.$data.isFocus
+      if (myID === userID) {
+        alert('You could not follow yourself!')
+        return
+      }
       this.$data.loading = true
-      const res = isHisFans ? await this.http.post('/user/focus/delete/', { userID }) : await this.http.post('/user/focus/add', { to: userID })
+      const res = isHisFans ? await this.http.post('/user/focus/delete', { to: userID }) : await this.http.post('/user/focus/add', { to: userID })
       if (res.data.success) {
         this.$data.loading = false
         this.$data.isFocus = !isHisFans

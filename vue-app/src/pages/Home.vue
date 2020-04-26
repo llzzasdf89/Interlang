@@ -58,6 +58,10 @@
 export default {
   mounted () {
     this.fetchQuestions(this.$data.page++)
+    const user = this.$store.state.user
+    const userIns = user.InterestedLanguages.map(v => v.Name)
+    const userLans = [...new Set(userIns.concat([user.FirstLanguage]))]
+    this.$data.userLans = userLans
   },
   data: function () {
     return {
@@ -65,7 +69,8 @@ export default {
       questions: [],
       tabs: [],
       tabItems: [],
-      page: 0
+      page: 0,
+      userLans: []
     }
   },
   methods: {
@@ -73,9 +78,6 @@ export default {
       setTimeout(() => {
         this.fetchQuestions(this.$data.page++, true)
       }, 1000)
-    },
-    scroll: function (e) {
-      console.log(e)
     },
     toUserDetail (userID) {
       this.http.get(`/user/info/${userID}`).then(res => {
@@ -89,7 +91,7 @@ export default {
           })
         }
       }).catch(err => {
-        console.log(err)
+        return err
       })
     },
     fetchQuestions: function (page = 0, loadmore = false) {
@@ -97,17 +99,26 @@ export default {
       this.http.get(`/questions/list?page=${page}`).then(res => {
         if (res.success) {
           const questions = res.data
+          const userLans = this.$data.userLans
           that.$refs.my_scroller.finishInfinite(true)
           if (loadmore && JSON.stringify(res.data) === '[]') {
             return
           }
-          const tabs = [...new Set(questions.map((v) => v.Language))]
+          let tabs = []
+          if (userLans.length > 0) {
+            tabs = [...new Set(questions.map((v) => {
+              if (userLans.includes(v.Language)) { return v.Language }
+            }))]
+          } else {
+            alert('fetch user Intersted Languages error! Now use all languages as default display')
+            tabs = [...new Set(questions.map((v) => v.Language))]
+          }
           this.$data.tabs = [...new Set(this.$data.tabs.concat(tabs))]
           this.$data.questions = this.$data.questions.concat(questions)
           this.changeTab(0)
         }
       }).catch(err => {
-        console.log(err)
+        return err
       })
     },
     toMsgDetail: function (msgID) {

@@ -25,11 +25,6 @@ export default {
   components: {
     chatMessage
   },
-  watch: {
-    $route: function (n, o) {
-      console.log(n, o)
-    }
-  },
   mounted () {
     const self = this.$store.state.user
     const opposite = this.$route.params.user

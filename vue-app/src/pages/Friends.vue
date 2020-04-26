@@ -3,7 +3,7 @@
 <transition>
   <router-view></router-view>
 </transition>
-<v-content v-if="!$route.params.userID && $route.name!='Chat'" style="background:rgb(243,245,250)">
+<v-content v-if="!$route.params.userID && $route.name!='Chat' && $route.name==='Friends'" style="background:rgb(243,245,250)">
 <friendItem @click.native='toFriendDetail(i.ID)'  v-for='i in friends' :key='i.ID' :user='i'>
 
 </friendItem>

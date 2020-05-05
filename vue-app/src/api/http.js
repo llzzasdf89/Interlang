@@ -13,13 +13,19 @@ axios.interceptors.request.use(
         Authorization: token
       }
     }
+    console.log(config)
     return config
   },
   err => {
     return err
   }
 )
-
+axios.interceptors.response.use(
+  config => {
+    console.log(config)
+    return config
+  }
+)
 export default {
   fetchFans: function () {
     return this.get('/user/fans')

@@ -58,10 +58,10 @@
                     v-show="!$route.params.isLogin"
                     required
                   >
-                    <!-- <template v-slot:append>
+                    <template v-slot:append>
                       <v-tooltip bottom>
                         <template v-slot:activator = "{ on }">
-                          <v-btn v-on='on' icon :loading='vCodeLoading'  :disabled='!email' @click='sendCodeMail'>
+                          <v-btn v-on='on' icon :loading='vCodeLoading'  :disabled='!email.match(/^([a-zA-Z]|[0-9])(\w|\\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/)' @click='sendCodeMail'>
                              <v-icon>mdi-send</v-icon>
                              <template v-slot:loader>
                                     <span>
@@ -70,11 +70,11 @@
                                   </template>
                             </v-btn>
                         </template>
-                        click to send verification code
+                        verification code has been sent to your email
                       </v-tooltip>
-                    </template> -->
+                    </template>
                   </v-text-field>
-                  <!-- <v-text-field
+                  <v-text-field
                     id="verificationCode"
                     label="verificationCode"
                     name="verificationCode"
@@ -85,7 +85,7 @@
                     :rules='verificationCodeRules'
                     v-if="!$route.params.isLogin"
                     required
-                  /> -->
+                  />
                 </v-form>
                 <v-form v-else v-model='isDataValid'>
                    <v-text-field
@@ -178,6 +178,7 @@ export default {
       if (!isLogin) {
         params.repassword = this.$data.repassword
         params.email = this.$data.email
+        params.verificationCode = this.$data.verificationCode
       }
       this.register_login(params)
     },

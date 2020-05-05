@@ -14,6 +14,7 @@ import friendDetail from '@/pages/friendDetail'
 import Setting from '@/pages/Setting'
 import Chat from '@/pages/Chat'
 import Focus from '@/pages/Focus'
+import findPassword from '@/pages/findPassword'
 Vue.use(VueRouter)
 
 const routes = [
@@ -104,6 +105,11 @@ const routes = [
         path: 'login',
         name: 'logIn',
         component: Register
+      },
+      {
+        path: 'findPassword',
+        name: 'findPassword',
+        component: findPassword
       }
     ]
   }

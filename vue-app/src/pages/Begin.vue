@@ -4,7 +4,7 @@
       <transition>
   <router-view></router-view>
 </transition>
-      <v-container fluid class="fill-height align-end justify-center">
+      <v-container fluid class="fill-height align-end justify-center" v-if="$route.name==='Begin'">
         <v-col cols="12">
           <v-card flat>
             <div><img src='@/assets/Logo.png' class='logo'></div>
@@ -34,6 +34,9 @@
                 rounded
                 :to="{name:'logIn', params: {isLogin:true}}"
               >Login</v-btn>
+            </div>
+            <div>
+              <a href='#' @click="$router.push({name:'findPassword'})">Forgot password?</a>
             </div>
           </v-col>
         </v-row>
